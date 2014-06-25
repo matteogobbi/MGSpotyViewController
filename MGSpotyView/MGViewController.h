@@ -6,8 +6,9 @@
 //  Copyright (c) 2014 Matteo Gobbi. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "MGSpotyViewController.h"
 
-@interface MGViewController : UIViewController
+@interface MGViewController : MGSpotyViewController
+
 
 @end

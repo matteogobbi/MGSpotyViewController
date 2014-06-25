@@ -13,14 +13,16 @@
 		6515A6E3195B7AA900A6DBE6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6515A6E1195B7AA900A6DBE6 /* InfoPlist.strings */; };
 		6515A6E5195B7AA900A6DBE6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6515A6E4195B7AA900A6DBE6 /* main.m */; };
 		6515A6E9195B7AA900A6DBE6 /* MGAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6515A6E8195B7AA900A6DBE6 /* MGAppDelegate.m */; };
-		6515A6EC195B7AA900A6DBE6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6515A6EA195B7AA900A6DBE6 /* Main.storyboard */; };
-		6515A6EF195B7AA900A6DBE6 /* MGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6515A6EE195B7AA900A6DBE6 /* MGViewController.m */; };
 		6515A6F1195B7AA900A6DBE6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6515A6F0195B7AA900A6DBE6 /* Images.xcassets */; };
 		6515A6F8195B7AA900A6DBE6 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6515A6F7195B7AA900A6DBE6 /* XCTest.framework */; };
 		6515A6F9195B7AA900A6DBE6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6515A6D8195B7AA900A6DBE6 /* Foundation.framework */; };
 		6515A6FA195B7AA900A6DBE6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6515A6DC195B7AA900A6DBE6 /* UIKit.framework */; };
 		6515A702195B7AA900A6DBE6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6515A700195B7AA900A6DBE6 /* InfoPlist.strings */; };
 		6515A704195B7AA900A6DBE6 /* MGSpotyViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6515A703195B7AA900A6DBE6 /* MGSpotyViewTests.m */; };
+		6515A710195B7BC100A6DBE6 /* MGSpotyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6515A70F195B7BC100A6DBE6 /* MGSpotyViewController.m */; };
+		6515A713195B891900A6DBE6 /* MGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6515A712195B891900A6DBE6 /* MGViewController.m */; };
+		6515A719195B90D300A6DBE6 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 6515A716195B90D300A6DBE6 /* UIImage+ImageEffects.m */; };
+		6515A71A195B90D300A6DBE6 /* UIImageView+LBBlurredImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6515A718195B90D300A6DBE6 /* UIImageView+LBBlurredImage.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,15 +46,20 @@
 		6515A6E6195B7AA900A6DBE6 /* MGSpotyView-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MGSpotyView-Prefix.pch"; sourceTree = "<group>"; };
 		6515A6E7195B7AA900A6DBE6 /* MGAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MGAppDelegate.h; sourceTree = "<group>"; };
 		6515A6E8195B7AA900A6DBE6 /* MGAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MGAppDelegate.m; sourceTree = "<group>"; };
-		6515A6EB195B7AA900A6DBE6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		6515A6ED195B7AA900A6DBE6 /* MGViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MGViewController.h; sourceTree = "<group>"; };
-		6515A6EE195B7AA900A6DBE6 /* MGViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MGViewController.m; sourceTree = "<group>"; };
 		6515A6F0195B7AA900A6DBE6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		6515A6F6195B7AA900A6DBE6 /* MGSpotyViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MGSpotyViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6515A6F7195B7AA900A6DBE6 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		6515A6FF195B7AA900A6DBE6 /* MGSpotyViewTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MGSpotyViewTests-Info.plist"; sourceTree = "<group>"; };
 		6515A701195B7AA900A6DBE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6515A703195B7AA900A6DBE6 /* MGSpotyViewTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MGSpotyViewTests.m; sourceTree = "<group>"; };
+		6515A70E195B7BC100A6DBE6 /* MGSpotyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSpotyViewController.h; sourceTree = "<group>"; };
+		6515A70F195B7BC100A6DBE6 /* MGSpotyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSpotyViewController.m; sourceTree = "<group>"; };
+		6515A711195B891900A6DBE6 /* MGViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGViewController.h; sourceTree = "<group>"; };
+		6515A712195B891900A6DBE6 /* MGViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGViewController.m; sourceTree = "<group>"; };
+		6515A715195B90D300A6DBE6 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		6515A716195B90D300A6DBE6 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
+		6515A717195B90D300A6DBE6 /* UIImageView+LBBlurredImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+LBBlurredImage.h"; sourceTree = "<group>"; };
+		6515A718195B90D300A6DBE6 /* UIImageView+LBBlurredImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+LBBlurredImage.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,11 +119,12 @@
 		6515A6DE195B7AA900A6DBE6 /* MGSpotyView */ = {
 			isa = PBXGroup;
 			children = (
+				6515A714195B902A00A6DBE6 /* Image Effects */,
+				6515A70D195B7B6300A6DBE6 /* MGSpotyViewController */,
 				6515A6E7195B7AA900A6DBE6 /* MGAppDelegate.h */,
 				6515A6E8195B7AA900A6DBE6 /* MGAppDelegate.m */,
-				6515A6EA195B7AA900A6DBE6 /* Main.storyboard */,
-				6515A6ED195B7AA900A6DBE6 /* MGViewController.h */,
-				6515A6EE195B7AA900A6DBE6 /* MGViewController.m */,
+				6515A711195B891900A6DBE6 /* MGViewController.h */,
+				6515A712195B891900A6DBE6 /* MGViewController.m */,
 				6515A6F0195B7AA900A6DBE6 /* Images.xcassets */,
 				6515A6DF195B7AA900A6DBE6 /* Supporting Files */,
 			);
@@ -150,6 +158,26 @@
 				6515A700195B7AA900A6DBE6 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6515A70D195B7B6300A6DBE6 /* MGSpotyViewController */ = {
+			isa = PBXGroup;
+			children = (
+				6515A70E195B7BC100A6DBE6 /* MGSpotyViewController.h */,
+				6515A70F195B7BC100A6DBE6 /* MGSpotyViewController.m */,
+			);
+			path = MGSpotyViewController;
+			sourceTree = SOURCE_ROOT;
+		};
+		6515A714195B902A00A6DBE6 /* Image Effects */ = {
+			isa = PBXGroup;
+			children = (
+				6515A715195B90D300A6DBE6 /* UIImage+ImageEffects.h */,
+				6515A716195B90D300A6DBE6 /* UIImage+ImageEffects.m */,
+				6515A717195B90D300A6DBE6 /* UIImageView+LBBlurredImage.h */,
+				6515A718195B90D300A6DBE6 /* UIImageView+LBBlurredImage.m */,
+			);
+			path = "Image Effects";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -200,6 +228,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Matteo Gobbi";
 				TargetAttributes = {
+					6515A6D4195B7AA900A6DBE6 = {
+						DevelopmentTeam = VU323Z2F3M;
+					};
 					6515A6F5195B7AA900A6DBE6 = {
 						TestTargetID = 6515A6D4195B7AA900A6DBE6;
 					};
@@ -231,7 +262,6 @@
 			files = (
 				6515A6F1195B7AA900A6DBE6 /* Images.xcassets in Resources */,
 				6515A6E3195B7AA900A6DBE6 /* InfoPlist.strings in Resources */,
-				6515A6EC195B7AA900A6DBE6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,8 +280,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6515A713195B891900A6DBE6 /* MGViewController.m in Sources */,
+				6515A719195B90D300A6DBE6 /* UIImage+ImageEffects.m in Sources */,
+				6515A710195B7BC100A6DBE6 /* MGSpotyViewController.m in Sources */,
+				6515A71A195B90D300A6DBE6 /* UIImageView+LBBlurredImage.m in Sources */,
 				6515A6E9195B7AA900A6DBE6 /* MGAppDelegate.m in Sources */,
-				6515A6EF195B7AA900A6DBE6 /* MGViewController.m in Sources */,
 				6515A6E5195B7AA900A6DBE6 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -281,14 +314,6 @@
 				6515A6E2195B7AA900A6DBE6 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		6515A6EA195B7AA900A6DBE6 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				6515A6EB195B7AA900A6DBE6 /* Base */,
-			);
-			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 		6515A700195B7AA900A6DBE6 /* InfoPlist.strings */ = {
@@ -377,6 +402,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MGSpotyView/MGSpotyView-Prefix.pch";
 				INFOPLIST_FILE = "MGSpotyView/MGSpotyView-Info.plist";
@@ -390,6 +416,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MGSpotyView/MGSpotyView-Prefix.pch";
 				INFOPLIST_FILE = "MGSpotyView/MGSpotyView-Info.plist";
