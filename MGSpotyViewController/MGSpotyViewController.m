@@ -9,16 +9,19 @@
 #import "MGSpotyViewController.h"
 #import "UIImageView+LBBlurredImage.h"
 
-@interface MGSpotyViewController ()
+static CGFloat const kMGOffsetBlurEffects = 30.0;
 
-@end
 
-@implementation MGSpotyViewController
+@implementation MGSpotyViewController {
+    CGPoint _startContentOffset;
+    UIImage *_image;
+}
 
 - (instancetype)initWithMainImage:(UIImage *)image {
     if(self = [super init]) {
+        _image = [image copy];
         _mainImageView = [UIImageView new];
-        [_mainImageView setImage:image];
+        [_mainImageView setImage:_image];
         _overView = [UIView new];
         _tableView = [UITableView new];
     }
@@ -30,8 +33,6 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    [_tableView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)loadView
@@ -43,8 +44,8 @@
     
     //Configure the view
     [_mainImageView setFrame:CGRectMake(0, 0, view.frame.size.width, view.frame.size.width)];
-    [_mainImageView setImageToBlur:_mainImageView.image blurRadius:kLBBlurredImageDefaultBlurRadius completionBlock:nil];
-    
+    [_mainImageView setContentMode:UIViewContentModeScaleAspectFill];
+    [_mainImageView setImageToBlur:_image blurRadius:kLBBlurredImageDefaultBlurRadius completionBlock:nil];
     [view addSubview:_mainImageView];
     
     [_tableView setFrame:view.frame];
@@ -54,6 +55,8 @@
     [_tableView setDataSource:self];
     [view addSubview:_tableView];
     
+    _startContentOffset = _tableView.contentOffset;
+    
     [_overView setFrame:CGRectMake(0, -_tableView.contentInset.top, _mainImageView.frame.size.width, _mainImageView.frame.size.height)];
     [_overView setBackgroundColor:[UIColor clearColor]];
     [_tableView addSubview:_overView];
@@ -62,7 +65,36 @@
     self.view = view;
 }
 
+#pragma mark - UIScrollView Delegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (scrollView.contentOffset.y <= _startContentOffset.y) {
+        
+        //Image size effects
+        CGFloat absoluteY = ABS(scrollView.contentOffset.y);
+        CGFloat diff = _startContentOffset.y - scrollView.contentOffset.y;
+        
+        [_mainImageView setFrame:CGRectMake(0.0-diff/2.0, 0.0, absoluteY, absoluteY)];
+        
+        
+        if (scrollView.contentOffset.y <= _startContentOffset.y && scrollView.contentOffset.y >= _startContentOffset.y-kMGOffsetBlurEffects) {
+            
+            //Image blur effects
+            CGFloat scale = kLBBlurredImageDefaultBlurRadius/kMGOffsetBlurEffects;
+            CGFloat newBlur = kLBBlurredImageDefaultBlurRadius - (diff*scale);
+            [_mainImageView setImageToBlur:_image blurRadius:newBlur completionBlock:nil];
+            
+            //Opacity overView
+            CGFloat scale =
+        }
+    }
+}
+
+
 #pragma mark - UITableView Delegate & Datasource
+
+/* To override */
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 20;
@@ -83,12 +115,6 @@
     return cell;
 }
 
-#pragma mark - Observer
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if([keyPath isEqualToString:@"contentOffset"]) {
-        
-    }
-}
 
 @end
