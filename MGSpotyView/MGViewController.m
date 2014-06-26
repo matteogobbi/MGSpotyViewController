@@ -15,7 +15,7 @@
 @implementation MGViewController
 
 - (void)viewDidLoad {
-    [self.overView addSubview:self.myOverView];
+    [self setOverView:self.myOverView];
 }
 
 - (UIView *)myOverView {
