@@ -3,6 +3,8 @@ MGSpotyViewController
 
 Beautiful viewController with a tableView and amazing effects like a viewController in the Spotify app.
 
+<img src="http://www.matteogobbi.it/files-hosting/MGSpotyViewVideo-smaller.gif" alt="MGSpotyViewController Gif" />
+
 ## Info
 
 This code must be used under ARC. 
