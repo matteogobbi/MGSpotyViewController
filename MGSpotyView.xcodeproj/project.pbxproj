@@ -119,7 +119,7 @@
 		6515A6DE195B7AA900A6DBE6 /* MGSpotyView */ = {
 			isa = PBXGroup;
 			children = (
-				6515A714195B902A00A6DBE6 /* Image Effects */,
+				6515A714195B902A00A6DBE6 /* ImageEffects */,
 				6515A70D195B7B6300A6DBE6 /* MGSpotyViewController */,
 				6515A6E7195B7AA900A6DBE6 /* MGAppDelegate.h */,
 				6515A6E8195B7AA900A6DBE6 /* MGAppDelegate.m */,
@@ -169,7 +169,7 @@
 			path = MGSpotyViewController;
 			sourceTree = SOURCE_ROOT;
 		};
-		6515A714195B902A00A6DBE6 /* Image Effects */ = {
+		6515A714195B902A00A6DBE6 /* ImageEffects */ = {
 			isa = PBXGroup;
 			children = (
 				6515A715195B90D300A6DBE6 /* UIImage+ImageEffects.h */,
@@ -177,7 +177,7 @@
 				6515A717195B90D300A6DBE6 /* UIImageView+LBBlurredImage.h */,
 				6515A718195B90D300A6DBE6 /* UIImageView+LBBlurredImage.m */,
 			);
-			path = "Image Effects";
+			path = ImageEffects;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -484,6 +484,7 @@
 				6515A709195B7AA900A6DBE6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6515A70A195B7AA900A6DBE6 /* Build configuration list for PBXNativeTarget "MGSpotyViewTests" */ = {
 			isa = XCConfigurationList;
@@ -492,6 +493,7 @@
 				6515A70C195B7AA900A6DBE6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
