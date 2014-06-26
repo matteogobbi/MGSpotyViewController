@@ -42,19 +42,23 @@ static CGFloat const kMGOffsetEffects = 40.0;
     [_mainImageView setImageToBlur:_image blurRadius:kLBBlurredImageDefaultBlurRadius completionBlock:nil];
     [view addSubview:_mainImageView];
     
+    [_overView setFrame:_mainImageView.bounds];
+    [_overView setBackgroundColor:[UIColor clearColor]];
+    [_overView setAutoresizingMask:UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin];
+    [_mainImageView addSubview:_overView];
+    
     [_tableView setFrame:view.frame];
     [_tableView setShowsVerticalScrollIndicator:NO];
     [_tableView setBackgroundColor:[UIColor clearColor]];
-    [_tableView setContentInset:UIEdgeInsetsMake(_mainImageView.frame.size.height, 0, 0, 0)];
+    //[_tableView setContentInset:UIEdgeInsetsMake(_mainImageView.frame.size.height, 0, 0, 0)];
     [_tableView setDelegate:self];
     [_tableView setDataSource:self];
     [view addSubview:_tableView];
     
     _startContentOffset = _tableView.contentOffset;
     
-    [_overView setFrame:CGRectMake(0, -_tableView.contentInset.top, _mainImageView.frame.size.width, _mainImageView.frame.size.height)];
-    [_overView setBackgroundColor:[UIColor clearColor]];
-    [_tableView addSubview:_overView];
+    
+    //[_tableView addSubview:_overView];
     
     //Set the view
     self.view = view;
@@ -70,7 +74,7 @@ static CGFloat const kMGOffsetEffects = 40.0;
         CGFloat absoluteY = ABS(scrollView.contentOffset.y);
         CGFloat diff = _startContentOffset.y - scrollView.contentOffset.y;
         
-        [_mainImageView setFrame:CGRectMake(0.0-diff/2.0, 0.0, absoluteY, absoluteY)];
+        [_mainImageView setFrame:CGRectMake(0.0-diff/2.0, 0.0, _overView.frame.size.width+absoluteY, _overView.frame.size.width+absoluteY)];
         
         
         if (scrollView.contentOffset.y <= _startContentOffset.y) {
@@ -102,8 +106,33 @@ static CGFloat const kMGOffsetEffects = 40.0;
 
 /* To override */
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if(section == 0) {
+        UIView *transparentView = [[UIView alloc] initWithFrame:_overView.bounds];
+        [transparentView setBackgroundColor:[UIColor clearColor]];
+        return transparentView;
+    }
+    
+    return nil;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if(section == 0)
+        return _overView.frame.size.height;
+
+    return 0.0;
+}
+
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 20;
+    if (section == 1)
+        return 20;
+    
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
