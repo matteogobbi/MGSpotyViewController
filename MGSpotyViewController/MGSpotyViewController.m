@@ -44,8 +44,8 @@ static CGFloat const kMGOffsetEffects = 40.0;
     
     [_overView setFrame:_mainImageView.bounds];
     [_overView setBackgroundColor:[UIColor clearColor]];
-    [_overView setAutoresizingMask:UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin];
-    [_mainImageView addSubview:_overView];
+    //[_overView setAutoresizingMask:UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin];
+    [view addSubview:_overView];
     
     [_tableView setFrame:view.frame];
     [_tableView setShowsVerticalScrollIndicator:NO];
@@ -56,9 +56,6 @@ static CGFloat const kMGOffsetEffects = 40.0;
     [view addSubview:_tableView];
     
     _startContentOffset = _tableView.contentOffset;
-    
-    
-    //[_tableView addSubview:_overView];
     
     //Set the view
     self.view = view;
@@ -88,7 +85,7 @@ static CGFloat const kMGOffsetEffects = 40.0;
         CGFloat diff = _startContentOffset.y - scrollView.contentOffset.y;
         
         [_mainImageView setFrame:CGRectMake(0.0-diff/2.0, 0.0, _overView.frame.size.width+absoluteY, _overView.frame.size.width+absoluteY)];
-        
+        [_overView setFrame:CGRectMake(0.0, 0.0+absoluteY, _overView.frame.size.width, _overView.frame.size.height)];
         
         if (scrollView.contentOffset.y <= _startContentOffset.y) {
             
@@ -103,11 +100,10 @@ static CGFloat const kMGOffsetEffects = 40.0;
             __block typeof (_overView) overView = _overView;
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                [_mainImageView setImageToBlur:_image blurRadius:newBlur completionBlock:^{
-                    //Opacity overView
-                    CGFloat scale = 1.0/kMGOffsetEffects;
-                    [overView setAlpha:1.0 - diff*scale];
-                }];
+                [_mainImageView setImageToBlur:_image blurRadius:newBlur completionBlock:nil];
+                //Opacity overView
+                CGFloat scale = 1.0/kMGOffsetEffects;
+                [overView setAlpha:1.0 - diff*scale];
             });
             
         }
