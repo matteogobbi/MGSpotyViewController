@@ -70,12 +70,12 @@ In the implementation file, first of all you should set the `overView`. The `ove
     }
 ```
 
-The best `overView` to set should be a <b>squared view</b>, with the same <b>width</b> and <b>height</b> of `self.overView`.
+The best `overView` to set should be a <b>squared view</b> with <b>transparent background</b>, with the same <b>width</b> and <b>height</b> of `self.overView` which is a <b>flexible container view</b> in the class `MGSpotyViewController`.
 <b>Width and height are so equal and they correspond with the width of the screen</b>.
 
 So for a classic iPhone the best frame would be: `{0, 0, 320.0, 320.0}` with flexible width and height.
 
-But to make the size adaptable to the screen starting the first time, the best thing to do would be <b>set the same bound of the property</b> `self.overView` which is a <b>flexible container view</b> in the class `MGSpotyViewController`.
+But to make the size adaptable to the screen starting the first time, the best thing to do would be <b>set the same bound of the property</b> `self.overView`.
 
 For this reason you see the line:
 
