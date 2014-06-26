@@ -9,7 +9,7 @@
 #import "MGSpotyViewController.h"
 #import "UIImageView+LBBlurredImage.h"
 
-static CGFloat const kMGOffsetEffects = 30.0;
+static CGFloat const kMGOffsetEffects = 40.0;
 
 
 @implementation MGSpotyViewController {
@@ -73,16 +73,26 @@ static CGFloat const kMGOffsetEffects = 30.0;
         [_mainImageView setFrame:CGRectMake(0.0-diff/2.0, 0.0, absoluteY, absoluteY)];
         
         
-        if (scrollView.contentOffset.y <= _startContentOffset.y && scrollView.contentOffset.y >= _startContentOffset.y-kMGOffsetEffects) {
+        if (scrollView.contentOffset.y <= _startContentOffset.y) {
             
+            if(scrollView.contentOffset.y < _startContentOffset.y-kMGOffsetEffects) {
+                diff = kMGOffsetEffects;
+            }
+                
             //Image blur effects
             CGFloat scale = kLBBlurredImageDefaultBlurRadius/kMGOffsetEffects;
             CGFloat newBlur = kLBBlurredImageDefaultBlurRadius - diff*scale;
-            [_mainImageView setImageToBlur:_image blurRadius:newBlur completionBlock:nil];
             
-            //Opacity overView
-            scale = 1.0/kMGOffsetEffects;
-            [_overView setAlpha:1.0 - diff*scale];
+            __block typeof (_overView) overView = _overView;
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [_mainImageView setImageToBlur:_image blurRadius:newBlur completionBlock:^{
+                    //Opacity overView
+                    CGFloat scale = 1.0/kMGOffsetEffects;
+                    [overView setAlpha:1.0 - diff*scale];
+                }];
+            });
+            
         }
     }
 }
