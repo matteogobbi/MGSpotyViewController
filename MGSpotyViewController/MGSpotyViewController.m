@@ -64,6 +64,19 @@ static CGFloat const kMGOffsetEffects = 40.0;
     self.view = view;
 }
 
+#pragma mark - Properties Methods
+
+- (void)setOverView:(UIView *)overView {
+    static NSUInteger subviewTag = 100;
+    UIView *subView = [overView viewWithTag:subviewTag];
+    
+    if(![subView isEqual:overView]) {
+        [subView removeFromSuperview];
+        [_overView addSubview:overView];
+    }
+}
+
+
 #pragma mark - UIScrollView Delegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
