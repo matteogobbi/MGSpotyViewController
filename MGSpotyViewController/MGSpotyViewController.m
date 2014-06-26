@@ -9,7 +9,7 @@
 #import "MGSpotyViewController.h"
 #import "UIImageView+LBBlurredImage.h"
 
-static CGFloat const kMGOffsetBlurEffects = 30.0;
+static CGFloat const kMGOffsetEffects = 30.0;
 
 
 @implementation MGSpotyViewController {
@@ -29,12 +29,6 @@ static CGFloat const kMGOffsetBlurEffects = 30.0;
     return self;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-}
-
 - (void)loadView
 {
     //Create the view
@@ -49,6 +43,7 @@ static CGFloat const kMGOffsetBlurEffects = 30.0;
     [view addSubview:_mainImageView];
     
     [_tableView setFrame:view.frame];
+    [_tableView setShowsVerticalScrollIndicator:NO];
     [_tableView setBackgroundColor:[UIColor clearColor]];
     [_tableView setContentInset:UIEdgeInsetsMake(_mainImageView.frame.size.height, 0, 0, 0)];
     [_tableView setDelegate:self];
@@ -78,15 +73,16 @@ static CGFloat const kMGOffsetBlurEffects = 30.0;
         [_mainImageView setFrame:CGRectMake(0.0-diff/2.0, 0.0, absoluteY, absoluteY)];
         
         
-        if (scrollView.contentOffset.y <= _startContentOffset.y && scrollView.contentOffset.y >= _startContentOffset.y-kMGOffsetBlurEffects) {
+        if (scrollView.contentOffset.y <= _startContentOffset.y && scrollView.contentOffset.y >= _startContentOffset.y-kMGOffsetEffects) {
             
             //Image blur effects
-            CGFloat scale = kLBBlurredImageDefaultBlurRadius/kMGOffsetBlurEffects;
-            CGFloat newBlur = kLBBlurredImageDefaultBlurRadius - (diff*scale);
+            CGFloat scale = kLBBlurredImageDefaultBlurRadius/kMGOffsetEffects;
+            CGFloat newBlur = kLBBlurredImageDefaultBlurRadius - diff*scale;
             [_mainImageView setImageToBlur:_image blurRadius:newBlur completionBlock:nil];
             
             //Opacity overView
-            CGFloat scale =
+            scale = 1.0/kMGOffsetEffects;
+            [_overView setAlpha:1.0 - diff*scale];
         }
     }
 }
