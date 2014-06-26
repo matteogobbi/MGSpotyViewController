@@ -44,17 +44,16 @@ static CGFloat const kMGOffsetEffects = 40.0;
     
     [_overView setFrame:_mainImageView.bounds];
     [_overView setBackgroundColor:[UIColor clearColor]];
-    //[_overView setAutoresizingMask:UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin];
     [view addSubview:_overView];
     
     [_tableView setFrame:view.frame];
     [_tableView setShowsVerticalScrollIndicator:NO];
     [_tableView setBackgroundColor:[UIColor clearColor]];
-    //[_tableView setContentInset:UIEdgeInsetsMake(_mainImageView.frame.size.height, 0, 0, 0)];
     [_tableView setDelegate:self];
     [_tableView setDataSource:self];
     [view addSubview:_tableView];
     
+    //[_tableView setContentInset:UIEdgeInsetsMake(20.0, 0, 0, 0)];
     _startContentOffset = _tableView.contentOffset;
     
     //Set the view
