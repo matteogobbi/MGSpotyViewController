@@ -19,6 +19,14 @@ In the package see the class `MGViewController.{h,m}` as example.
 
 Here the explanation:
 
+Init is easy. You have just to pass the main image for the blur effect:
+
+``` objective-c
+    MGViewController *spotyViewController = [[MGViewController alloc] initWithMainImage:[UIImage imageNamed:@"example"]];
+```
+
+`MGViewController` extends `MGSpotyViewController`:
+
 ``` objective-c
     //
     //  MGViewController.h
