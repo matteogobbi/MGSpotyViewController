@@ -75,7 +75,7 @@ The best `overView` to set should be a <b>squared view</b> with <b>transparent b
 
 So for a classic iPhone the best frame would be: `{0, 0, 320.0, 320.0}` with flexible width and height.
 
-But to make the size adaptable to the screen starting the first time, the best thing to do would be <b>set the same bound of the property</b> `self.overView`.
+But to make the size adaptable to the screen starting the first time, the best thing to do would be <b>set the same bounds of the property</b> `self.overView`.
 
 For this reason you see the line:
 
@@ -85,7 +85,7 @@ For this reason you see the line:
 
 The other thing to configure is the `tableView`. The `tableView` is already in the `MGSpotyViewController`, you have just to override the `UITableViewDelegate` and `UITableViewDatasource` methods.
 
-You have just to <b>remember that the section 0 is reserved, so you have to return 1 section in more and managing only your section (section > 0). For section 0, you should call the superclass method</b>, like in the example below:
+You have just to <b>remember that the section 0 is reserved, so you have to return 1 section in more and managing only your sections (section > 0)</b>:
 
 ``` objective-c
     #pragma mark - UITableView Delegate & Datasource
@@ -119,7 +119,7 @@ You have just to <b>remember that the section 0 is reserved, so you have to retu
     }
 ```
 
-And, if you need to manage <b>sections header title</b> or <b>sections header view</b>:
+And, if you need to manage <b>sections header title</b> or <b>sections header view, for the section 0 you should call the superclass method</b>, like in the example below:
 
 ```objective-c
 
