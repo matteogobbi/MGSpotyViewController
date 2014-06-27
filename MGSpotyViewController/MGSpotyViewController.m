@@ -9,8 +9,7 @@
 #import "MGSpotyViewController.h"
 #import "UIImageView+LBBlurredImage.h"
 
-static CGFloat const kMGOffsetEffects = 40.0;
-
+CGFloat const kMGOffsetEffects = 40.0;
 
 @implementation MGSpotyViewController {
     CGPoint _startContentOffset;
