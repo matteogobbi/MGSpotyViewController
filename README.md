@@ -44,7 +44,7 @@ Init is easy. You have just to pass the main image for the blur effect:
     @end
 ```
 
-In the implementation file, first of all you should set the `overView`. The `overView` is basically <b>the header view which remain over the blur image</b>:
+In the implementation file, first of all you should set the `overView`. The `overView` is basically <b>the header view which remains over the blur image</b>:
 
 ``` objective-c
     - (void)viewDidLoad {
@@ -85,7 +85,7 @@ The best `overView` to set should be a <b>squared view</b> with <b>transparent b
 
 So for a classic iPhone the best frame would be: `{0, 0, 320.0, 320.0}` with flexible width and height.
 
-But to make the size adaptable to the screen starting the first time, the best thing to do would be <b>set the same bounds of the property</b> `self.overView`.
+But to make the size adaptable to the screen starting from the first time, the best thing to do would be <b>set the same bounds of the property</b> `self.overView`.
 
 For this reason you see the line:
 
