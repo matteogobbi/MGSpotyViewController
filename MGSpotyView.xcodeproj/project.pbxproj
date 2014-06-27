@@ -21,8 +21,8 @@
 		6515A704195B7AA900A6DBE6 /* MGSpotyViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6515A703195B7AA900A6DBE6 /* MGSpotyViewTests.m */; };
 		6515A710195B7BC100A6DBE6 /* MGSpotyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6515A70F195B7BC100A6DBE6 /* MGSpotyViewController.m */; };
 		6515A713195B891900A6DBE6 /* MGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6515A712195B891900A6DBE6 /* MGViewController.m */; };
-		6515A719195B90D300A6DBE6 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 6515A716195B90D300A6DBE6 /* UIImage+ImageEffects.m */; };
-		6515A71A195B90D300A6DBE6 /* UIImageView+LBBlurredImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6515A718195B90D300A6DBE6 /* UIImageView+LBBlurredImage.m */; };
+		65E924BE195D825200EA4236 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 65E924BB195D825200EA4236 /* UIImage+ImageEffects.m */; };
+		65E924BF195D825200EA4236 /* UIImageView+LBBlurredImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 65E924BD195D825200EA4236 /* UIImageView+LBBlurredImage.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,10 +56,10 @@
 		6515A70F195B7BC100A6DBE6 /* MGSpotyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSpotyViewController.m; sourceTree = "<group>"; };
 		6515A711195B891900A6DBE6 /* MGViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGViewController.h; sourceTree = "<group>"; };
 		6515A712195B891900A6DBE6 /* MGViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGViewController.m; sourceTree = "<group>"; };
-		6515A715195B90D300A6DBE6 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
-		6515A716195B90D300A6DBE6 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
-		6515A717195B90D300A6DBE6 /* UIImageView+LBBlurredImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+LBBlurredImage.h"; sourceTree = "<group>"; };
-		6515A718195B90D300A6DBE6 /* UIImageView+LBBlurredImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+LBBlurredImage.m"; sourceTree = "<group>"; };
+		65E924BA195D825200EA4236 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		65E924BB195D825200EA4236 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
+		65E924BC195D825200EA4236 /* UIImageView+LBBlurredImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+LBBlurredImage.h"; sourceTree = "<group>"; };
+		65E924BD195D825200EA4236 /* UIImageView+LBBlurredImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+LBBlurredImage.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,7 +119,6 @@
 		6515A6DE195B7AA900A6DBE6 /* MGSpotyView */ = {
 			isa = PBXGroup;
 			children = (
-				6515A714195B902A00A6DBE6 /* ImageEffects */,
 				6515A70D195B7B6300A6DBE6 /* MGSpotyViewController */,
 				6515A6E7195B7AA900A6DBE6 /* MGAppDelegate.h */,
 				6515A6E8195B7AA900A6DBE6 /* MGAppDelegate.m */,
@@ -163,19 +162,20 @@
 		6515A70D195B7B6300A6DBE6 /* MGSpotyViewController */ = {
 			isa = PBXGroup;
 			children = (
+				65E924B9195D825200EA4236 /* ImageEffects */,
 				6515A70E195B7BC100A6DBE6 /* MGSpotyViewController.h */,
 				6515A70F195B7BC100A6DBE6 /* MGSpotyViewController.m */,
 			);
 			path = MGSpotyViewController;
 			sourceTree = SOURCE_ROOT;
 		};
-		6515A714195B902A00A6DBE6 /* ImageEffects */ = {
+		65E924B9195D825200EA4236 /* ImageEffects */ = {
 			isa = PBXGroup;
 			children = (
-				6515A715195B90D300A6DBE6 /* UIImage+ImageEffects.h */,
-				6515A716195B90D300A6DBE6 /* UIImage+ImageEffects.m */,
-				6515A717195B90D300A6DBE6 /* UIImageView+LBBlurredImage.h */,
-				6515A718195B90D300A6DBE6 /* UIImageView+LBBlurredImage.m */,
+				65E924BA195D825200EA4236 /* UIImage+ImageEffects.h */,
+				65E924BB195D825200EA4236 /* UIImage+ImageEffects.m */,
+				65E924BC195D825200EA4236 /* UIImageView+LBBlurredImage.h */,
+				65E924BD195D825200EA4236 /* UIImageView+LBBlurredImage.m */,
 			);
 			path = ImageEffects;
 			sourceTree = "<group>";
@@ -281,9 +281,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				6515A713195B891900A6DBE6 /* MGViewController.m in Sources */,
-				6515A719195B90D300A6DBE6 /* UIImage+ImageEffects.m in Sources */,
+				65E924BE195D825200EA4236 /* UIImage+ImageEffects.m in Sources */,
 				6515A710195B7BC100A6DBE6 /* MGSpotyViewController.m in Sources */,
-				6515A71A195B90D300A6DBE6 /* UIImageView+LBBlurredImage.m in Sources */,
+				65E924BF195D825200EA4236 /* UIImageView+LBBlurredImage.m in Sources */,
 				6515A6E9195B7AA900A6DBE6 /* MGAppDelegate.m in Sources */,
 				6515A6E5195B7AA900A6DBE6 /* main.m in Sources */,
 			);

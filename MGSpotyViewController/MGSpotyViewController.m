@@ -77,7 +77,7 @@ static CGFloat const kMGOffsetEffects = 40.0;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (scrollView.contentOffset.y <= _startContentOffset.y) {
+    if(scrollView.contentOffset.y <= _startContentOffset.y) {
         
         //Image size effects
         CGFloat absoluteY = ABS(scrollView.contentOffset.y);
@@ -86,7 +86,7 @@ static CGFloat const kMGOffsetEffects = 40.0;
         [_mainImageView setFrame:CGRectMake(0.0-diff/2.0, 0.0, _overView.frame.size.width+absoluteY, _overView.frame.size.width+absoluteY)];
         [_overView setFrame:CGRectMake(0.0, 0.0+absoluteY, _overView.frame.size.width, _overView.frame.size.height)];
         
-        if (scrollView.contentOffset.y <= _startContentOffset.y) {
+        if(scrollView.contentOffset.y <= _startContentOffset.y) {
             
             if(scrollView.contentOffset.y < _startContentOffset.y-kMGOffsetEffects) {
                 diff = kMGOffsetEffects;
@@ -137,7 +137,7 @@ static CGFloat const kMGOffsetEffects = 40.0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 1)
+    if(section == 1)
         return 20;
     
     return 0;
