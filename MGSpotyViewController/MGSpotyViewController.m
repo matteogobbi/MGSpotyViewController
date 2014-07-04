@@ -10,9 +10,11 @@
 #import "UIImageView+LBBlurredImage.h"
 
 CGFloat const kMGOffsetEffects = 40.0;
+CGFloat const kMGOffsetBlurEffect = 2.0;
 
 @implementation MGSpotyViewController {
     CGPoint _startContentOffset;
+    CGPoint _lastContentOffsetBlurEffect;
     UIImage *_image;
 }
 
@@ -54,6 +56,7 @@ CGFloat const kMGOffsetEffects = 40.0;
     
     //[_tableView setContentInset:UIEdgeInsetsMake(20.0, 0, 0, 0)];
     _startContentOffset = _tableView.contentOffset;
+    _lastContentOffsetBlurEffect = _startContentOffset;
     
     //Set the view
     self.view = view;
@@ -85,26 +88,29 @@ CGFloat const kMGOffsetEffects = 40.0;
         [_mainImageView setFrame:CGRectMake(0.0-diff/2.0, 0.0, _overView.frame.size.width+absoluteY, _overView.frame.size.width+absoluteY)];
         [_overView setFrame:CGRectMake(0.0, 0.0+absoluteY, _overView.frame.size.width, _overView.frame.size.height)];
         
-        if(scrollView.contentOffset.y <= _startContentOffset.y) {
-            
-            if(scrollView.contentOffset.y < _startContentOffset.y-kMGOffsetEffects) {
-                diff = kMGOffsetEffects;
-            }
-                
-            //Image blur effects
-            CGFloat scale = kLBBlurredImageDefaultBlurRadius/kMGOffsetEffects;
-            CGFloat newBlur = kLBBlurredImageDefaultBlurRadius - diff*scale;
-            
-            __block typeof (_overView) overView = _overView;
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [_mainImageView setImageToBlur:_image blurRadius:newBlur completionBlock:nil];
-                //Opacity overView
-                CGFloat scale = 1.0/kMGOffsetEffects;
-                [overView setAlpha:1.0 - diff*scale];
-            });
-            
+        if(scrollView.contentOffset.y < _startContentOffset.y-kMGOffsetEffects) {
+            diff = kMGOffsetEffects;
         }
+        
+        //Image blur effects
+        CGFloat scale = kLBBlurredImageDefaultBlurRadius/kMGOffsetEffects;
+        CGFloat newBlur = kLBBlurredImageDefaultBlurRadius - diff*scale;
+        
+        __block typeof (_overView) overView = _overView;
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            //Blur effects
+            if(ABS(_lastContentOffsetBlurEffect.y-scrollView.contentOffset.y) >= kMGOffsetBlurEffect) {
+                _lastContentOffsetBlurEffect = scrollView.contentOffset;
+                [_mainImageView setImageToBlur:_image blurRadius:newBlur completionBlock:nil];
+            }
+            
+            //Opacity overView
+            CGFloat scale = 1.0/kMGOffsetEffects;
+            [overView setAlpha:1.0 - diff*scale];
+        });
+        
     }
 }
 

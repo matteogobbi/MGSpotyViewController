@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 extern CGFloat const kMGOffsetEffects;
+extern CGFloat const kMGOffsetBlurEffect;
 
 @interface MGSpotyViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
