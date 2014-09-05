@@ -27,7 +27,6 @@ CGFloat const kMGOffsetBlurEffect = 2.0;
         _overView = [UIView new];
         _tableView = [UITableView new];
         _operationQueue.maxConcurrentOperationCount = 1;
-        _mainImageView.operationQueue = _operationQueue;
     }
     
     return self;
@@ -43,7 +42,7 @@ CGFloat const kMGOffsetBlurEffect = 2.0;
     //Configure the view
     [_mainImageView setFrame:CGRectMake(0, 0, view.frame.size.width, view.frame.size.width)];
     [_mainImageView setContentMode:UIViewContentModeScaleAspectFill];
-    [_mainImageView setImageToBlur:_image blurRadius:kLBBlurredImageDefaultBlurRadius completionBlock:nil];
+    [_mainImageView setImageToBlur:_image blurRadius:kLBBlurredImageDefaultBlurRadius onQueue:_operationQueue completionBlock:nil];
     [view addSubview:_mainImageView];
     
     [_overView setFrame:_mainImageView.bounds];
@@ -106,7 +105,7 @@ CGFloat const kMGOffsetBlurEffect = 2.0;
             //Blur effects
             if(ABS(_lastContentOffsetBlurEffect.y-scrollView.contentOffset.y) >= kMGOffsetBlurEffect) {
                 _lastContentOffsetBlurEffect = scrollView.contentOffset;
-                [_mainImageView setImageToBlur:_image blurRadius:newBlur completionBlock:nil];
+                [_mainImageView setImageToBlur:_image blurRadius:newBlur onQueue:_operationQueue completionBlock:nil];
             }
             
             //Opacity overView
