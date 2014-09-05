@@ -12,41 +12,39 @@
 CGFloat const kLBBlurredImageDefaultBlurRadius            = 20.0;
 CGFloat const kLBBlurredImageDefaultSaturationDeltaFactor = 1.0;
 
-@implementation UIImageView (LBBlurredImage) 
+@implementation UIImageView (LBBlurredImage)
 
 #pragma mark - LBBlurredImage Additions
 
 - (void)setImageToBlur:(UIImage *)image
-               onQueue:(NSOperationQueue *)queue
        completionBlock:(LBBlurredImageCompletionBlock)completion
 {
     [self setImageToBlur:image
               blurRadius:kLBBlurredImageDefaultBlurRadius
-                 onQueue:queue completionBlock:completion];
-
+         completionBlock:completion];
 }
 
 - (void)setImageToBlur:(UIImage *)image
             blurRadius:(CGFloat)blurRadius
-               onQueue:(NSOperationQueue *)queue
        completionBlock:(LBBlurredImageCompletionBlock) completion
 {
     NSParameterAssert(image);
     NSParameterAssert(blurRadius >= 0);
     
-    [queue addOperationWithBlock:^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
         UIImage *blurredImage = [image applyBlurWithRadius:blurRadius
                                                  tintColor:nil
                                      saturationDeltaFactor:kLBBlurredImageDefaultSaturationDeltaFactor
                                                  maskImage:nil];
         
-        [[NSOperationQueue mainQueue]addOperationWithBlock:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
             self.image = blurredImage;
             if(completion) {
                 completion();
             }
-        }];
-    }];
+        });
+    });
 }
 
 @end
