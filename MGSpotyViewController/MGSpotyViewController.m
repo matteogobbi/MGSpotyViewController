@@ -16,6 +16,7 @@ CGFloat const kMGOffsetBlurEffect = 2.0;
     CGPoint _startContentOffset;
     CGPoint _lastContentOffsetBlurEffect;
     UIImage *_image;
+    NSOperationQueue *_operationQueue;
 }
 
 - (instancetype)initWithMainImage:(UIImage *)image {
@@ -25,6 +26,8 @@ CGFloat const kMGOffsetBlurEffect = 2.0;
         [_mainImageView setImage:_image];
         _overView = [UIView new];
         _tableView = [UITableView new];
+        _operationQueue.maxConcurrentOperationCount = 1;
+        _mainImageView.operationQueue = _operationQueue;
     }
     
     return self;
