@@ -26,6 +26,7 @@ CGFloat const kMGOffsetBlurEffect = 2.0;
         [_mainImageView setImage:_image];
         _overView = [UIView new];
         _tableView = [UITableView new];
+        _operationQueue = [NSOperationQueue alloc]init];
         _operationQueue.maxConcurrentOperationCount = 1;
     }
     
