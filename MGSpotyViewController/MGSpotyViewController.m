@@ -16,6 +16,7 @@ CGFloat const kMGOffsetBlurEffect = 2.0;
     CGPoint _startContentOffset;
     CGPoint _lastContentOffsetBlurEffect;
     UIImage *_image;
+    NSOperationQueue *_operationQueue;
 }
 
 - (instancetype)initWithMainImage:(UIImage *)image {
