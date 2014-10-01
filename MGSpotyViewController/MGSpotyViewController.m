@@ -77,6 +77,10 @@ CGFloat const kMGOffsetBlurEffect = 2.0;
     }
 }
 
+- (void)setMainImage:(UIImage *)image {
+    _image = [image copy];
+    [_mainImageView setImageToBlur:_image blurRadius:kLBBlurredImageDefaultBlurRadius completionBlock:nil];
+}
 
 #pragma mark - UIScrollView Delegate
 
