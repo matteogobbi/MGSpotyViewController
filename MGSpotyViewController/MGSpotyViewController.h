@@ -18,5 +18,6 @@ extern CGFloat const kMGOffsetBlurEffect;
 @property (nonatomic, strong) UIImageView *mainImageView;
 
 - (instancetype)initWithMainImage:(UIImage *)image;
+- (void)setMainImage:(UIImage *)image;
 
 @end
