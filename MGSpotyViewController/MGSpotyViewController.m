@@ -78,8 +78,17 @@ CGFloat const kMGOffsetBlurEffect = 2.0;
 }
 
 - (void)setMainImage:(UIImage *)image {
-    _image = [image copy];
-    [_mainImageView setImageToBlur:_image blurRadius:kLBBlurredImageDefaultBlurRadius completionBlock:nil];
+    // Resize Image
+    CGSize size=CGSizeMake(self.mainImageView.frame.size.width,self.mainImageView.frame.size.height);
+    UIGraphicsBeginImageContext(size);
+    [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    //End Resize Image
+    
+    //Copying resized image & setting to blur
+    _image = [scaledImage copy];
+    [_mainImageView setImageToBlur:scaledImage blurRadius:kLBBlurredImageDefaultBlurRadius completionBlock:nil];
 }
 
 #pragma mark - UIScrollView Delegate
