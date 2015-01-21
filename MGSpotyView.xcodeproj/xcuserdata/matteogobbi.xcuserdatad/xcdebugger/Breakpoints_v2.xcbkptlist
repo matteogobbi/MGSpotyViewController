@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MGSpotyViewController/MGSpotyViewController.m"
-            timestampString = "431816686.165488"
+            timestampString = "443571095.888568"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "91"
-            endingLineNumber = "91"
-            landmarkName = "-scrollViewDidScroll:"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
+            landmarkName = "-setMainImage:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
