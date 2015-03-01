@@ -10,4 +10,7 @@
 
 @interface MGSpotyView : UIView
 
+@property (nonatomic, weak) UIView *overview;
+@property (nonatomic, weak) UITableView *tableView;
+
 @end
