@@ -37,9 +37,16 @@
     [lblTitle setTextAlignment:NSTextAlignmentCenter];
     [lblTitle setTextColor:[UIColor whiteColor]];
     
+    UIButton *btContact = [[UIButton alloc] initWithFrame:CGRectMake(view.center.x-35.0, view.center.y+100.0, 70.0, 35.0)];
+    [btContact setTitle:@"Contact" forState:UIControlStateNormal];
+    [btContact addTarget:self action:@selector(actionContact:) forControlEvents:UIControlEventTouchUpInside];
+    btContact.backgroundColor = [UIColor darkGrayColor];
+    btContact.titleLabel.font = [UIFont fontWithName:@"Verdana" size:12.0];
+    btContact.layer.cornerRadius = 5.0;
     
     [view addSubview:imageView];
     [view addSubview:lblTitle];
+    [view addSubview:btContact];
     
     return view;
 }
@@ -101,6 +108,14 @@
     [cell.textLabel setText:@"Cell"];
     
     return cell;
+}
+
+
+#pragma mark - Action
+
+- (void)actionContact:(id)sender
+{
+    [[[UIAlertView alloc] initWithTitle:@"Contact" message:@"Pressed button Contact" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
 }
 
 @end
