@@ -9,6 +9,8 @@
 #import "MGSpotyViewController.h"
 #import "UIImageView+LBBlurredImage.h"
 
+#import "MGSpotyView.h"
+
 CGFloat const kMGOffsetEffects = 40.0;
 CGFloat const kMGOffsetBlurEffect = 2.0;
 
@@ -36,7 +38,7 @@ CGFloat const kMGOffsetBlurEffect = 2.0;
 - (void)loadView
 {
     //Create the view
-    UIView *view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    MGSpotyView *view = [[MGSpotyView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [view setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
     [view setBackgroundColor:[UIColor grayColor]];
     
@@ -57,13 +59,17 @@ CGFloat const kMGOffsetBlurEffect = 2.0;
     [_tableView setDataSource:self];
     [view addSubview:_tableView];
     
-    //[_tableView setContentInset:UIEdgeInsetsMake(20.0, 0, 0, 0)];
     _startContentOffset = _tableView.contentOffset;
     _lastContentOffsetBlurEffect = _startContentOffset;
+    
+    //Pass references
+    view.overview = _overView;
+    view.tableView = _tableView;
     
     //Set the view
     self.view = view;
 }
+
 
 #pragma mark - Properties Methods
 
