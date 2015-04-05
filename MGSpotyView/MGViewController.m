@@ -29,6 +29,7 @@
     [imageView.layer setBorderColor:[UIColor whiteColor].CGColor];
     [imageView.layer setBorderWidth:2.0];
     [imageView.layer setCornerRadius:imageView.frame.size.width/2.0];
+    imageView.userInteractionEnabled = YES;
     
     //Add an example label
     UILabel *lblTitle = [[UILabel alloc] initWithFrame:CGRectMake(view.center.x-120.0, view.center.y+50.0, 240.0, 50.0)];
@@ -47,6 +48,10 @@
     [view addSubview:imageView];
     [view addSubview:lblTitle];
     [view addSubview:btContact];
+    
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    tapRecognizer.numberOfTapsRequired = 1;
+    [imageView addGestureRecognizer:tapRecognizer];
     
     return view;
 }
@@ -88,7 +93,7 @@
     return mySections + 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {    
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if(section == 1)
         return 20;
     
@@ -117,5 +122,17 @@
 {
     [[[UIAlertView alloc] initWithTitle:@"Contact" message:@"Pressed button Contact" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
 }
+
+
+#pragma mark - Gesture recognizer
+
+- (void)handleTap:(UITapGestureRecognizer *)sender
+{
+    if (sender.state == UIGestureRecognizerStateEnded)
+    {
+        [[[UIAlertView alloc] initWithTitle:@"Gesture recognizer" message:@"Touched image" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }
+}
+
 
 @end
