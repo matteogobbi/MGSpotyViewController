@@ -80,22 +80,20 @@ In the implementation file, first of all you should set the `overView`. The `ove
     }
 ```
 
-The best `overView` to set should be a <b>squared view</b> with <b>transparent background</b>, with the same <b>width</b> and <b>height</b> of `self.overView` which is a <b>flexible container view</b> in the class `MGSpotyViewController`.
-<b>Width and height are so equal and they correspond with the width of the screen</b>.
+The best `overView` to create would be a <b>squared view</b> with a <b>transparent background</b>, and with the same <b>size</b> of `self.overView` which is a <b>flexible container view</b> in the class `MGSpotyViewController`.
+<b>Width and height should be therefore equal, and they should correspond to the width of the screen</b>.
 
-So for a classic iPhone the best frame would be: `{0, 0, 320.0, 320.0}` with flexible width and height.
+So for an iPhone 4s, the best frame would be: `{0, 0, 320.0, 320.0}` with flexible width and height.
 
-But to make the size adaptable to the screen starting from the first time, the best thing to do would be <b>set the same bounds of the property</b> `self.overView`.
-
-For this reason you see the line:
+But to make the size adaptable to the screen without any issue, the best thing would be to <b>set the same bounds of the view</b> `self.overView`:
 
 ``` objective-c
     UIView *view = [[UIView alloc] initWithFrame:self.overView.bounds];
 ```
 
-The other thing to configure is the `tableView`. The `tableView` is already in the `MGSpotyViewController`, you have just to override the `UITableViewDelegate` and `UITableViewDatasource` methods.
+Another thing to configure is the `tableView`. The `tableView` is already in the `MGSpotyViewController`, you have just to override the `UITableViewDelegate` and `UITableViewDatasource` methods.
 
-You have just to <b>remember that the section 0 is reserved, so you have to return 1 section in more and managing only your sections (section > 0)</b>:
+You must <b>remember that the section 0 is reserved, so you have to return 1 section in more and managing only your sections (section > 0)</b>:
 
 ``` objective-c
     #pragma mark - UITableView Delegate & Datasource
