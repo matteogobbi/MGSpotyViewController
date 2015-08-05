@@ -14,6 +14,10 @@
 CGFloat const kMGOffsetEffects = 40.0;
 CGFloat const kMGOffsetBlurEffect = 2.0;
 
+static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
+
+
+
 @implementation MGSpotyViewController {
     CGPoint _startContentOffset;
     CGPoint _lastContentOffsetBlurEffect;
@@ -65,9 +69,32 @@ CGFloat const kMGOffsetBlurEffect = 2.0;
     //Pass references
     view.overview = _overView;
     view.tableView = _tableView;
+    view.mainImageView = _mainImageView;
     
     //Set the view
     self.view = view;
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    
+    NSLog(@"%@, %@", NSStringFromCGRect(self.view.frame), NSStringFromCGRect(self.view.bounds));
+    
+    CGRect viewRect = self.view.frame;
+    
+    [_mainImageView setFrame:CGRectMake(0, 0, viewRect.size.width, viewRect.size.width)];
+    
+    CGRect rect = _mainImageView.frame;
+    rect.size.height = MIN(rect.size.height, viewRect.size.height*kMGMaxPercentageOverviewHeightInScreen);
+    [_overView setFrame:rect];
+    
+    [_tableView setFrame:viewRect];
+    
+    //Clear
+    _tableView.contentOffset = CGPointMake(0, 0);
+    _startContentOffset = _tableView.contentOffset;
+    _lastContentOffsetBlurEffect = _startContentOffset;
 }
 
 
