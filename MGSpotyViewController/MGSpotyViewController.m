@@ -14,6 +14,10 @@
 CGFloat const kMGOffsetEffects = 40.0;
 CGFloat const kMGOffsetBlurEffect = 2.0;
 
+static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
+
+
+
 @implementation MGSpotyViewController {
     CGPoint _startContentOffset;
     CGPoint _lastContentOffsetBlurEffect;
@@ -43,7 +47,7 @@ CGFloat const kMGOffsetBlurEffect = 2.0;
     [view setBackgroundColor:[UIColor grayColor]];
     
     //Configure the view
-    [_mainImageView setFrame:CGRectMake(0, 0, view.frame.size.width, view.frame.size.width)];
+    [_mainImageView setFrame:CGRectMake(0, 0, view.frame.size.width, MIN(view.frame.size.width, view.frame.size.height*kMGMaxPercentageOverviewHeightInScreen))];
     [_mainImageView setContentMode:UIViewContentModeScaleAspectFill];
     [_mainImageView setImageToBlur:_image blurRadius:kLBBlurredImageDefaultBlurRadius completionBlock:nil];
     [view addSubview:_mainImageView];
@@ -70,6 +74,26 @@ CGFloat const kMGOffsetBlurEffect = 2.0;
     self.view = view;
 }
 
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    
+    CGRect viewRect = self.view.frame;
+    
+    [_mainImageView setFrame:CGRectMake(0, 0, viewRect.size.width, viewRect.size.width)];
+    
+    CGRect rect = _mainImageView.frame;
+    rect.size.height = MIN(rect.size.height, viewRect.size.height*kMGMaxPercentageOverviewHeightInScreen);
+    [_overView setFrame:rect];
+    
+    [_tableView setFrame:viewRect];
+    
+    //Clear
+    _tableView.contentOffset = CGPointMake(0, 0);
+    _startContentOffset = _tableView.contentOffset;
+    _lastContentOffsetBlurEffect = _startContentOffset;
+}
+
 
 #pragma mark - Properties Methods
 
@@ -80,6 +104,14 @@ CGFloat const kMGOffsetBlurEffect = 2.0;
     if(![subView isEqual:overView]) {
         [subView removeFromSuperview];
         [_overView addSubview:overView];
+
+        for (NSLayoutConstraint *constraint in _overView.constraints) {
+            [_overView removeConstraint:constraint];
+        }
+        
+        overView.translatesAutoresizingMaskIntoConstraints = NO;
+        [_overView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[overView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(overView)]];
+        [_overView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[overView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(overView)]];
     }
 }
 
