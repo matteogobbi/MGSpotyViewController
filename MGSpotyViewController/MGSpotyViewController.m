@@ -66,6 +66,8 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
     _startContentOffset = _tableView.contentOffset;
     _lastContentOffsetBlurEffect = _startContentOffset;
     
+    [_overView setBackgroundColor:[UIColor yellowColor]];
+    
     //Pass references
     view.overview = _overView;
     view.tableView = _tableView;
@@ -104,9 +106,14 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
     if(![subView isEqual:overView]) {
         [subView removeFromSuperview];
         [_overView addSubview:overView];
-        overView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin |
-        UIViewAutoresizingFlexibleLeftMargin |
-        UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
+
+        for (NSLayoutConstraint *constraint in _overView.constraints) {
+            [_overView removeConstraint:constraint];
+        }
+        
+        overView.translatesAutoresizingMaskIntoConstraints = NO;
+        [_overView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[overView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(overView)]];
+        [_overView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[overView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(overView)]];
     }
 }
 
