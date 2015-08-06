@@ -69,7 +69,6 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
     //Pass references
     view.overview = _overView;
     view.tableView = _tableView;
-    view.mainImageView = _mainImageView;
     
     //Set the view
     self.view = view;
@@ -78,8 +77,6 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    
-    NSLog(@"%@, %@", NSStringFromCGRect(self.view.frame), NSStringFromCGRect(self.view.bounds));
     
     CGRect viewRect = self.view.frame;
     
@@ -107,6 +104,9 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
     if(![subView isEqual:overView]) {
         [subView removeFromSuperview];
         [_overView addSubview:overView];
+        overView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin |
+        UIViewAutoresizingFlexibleLeftMargin |
+        UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
     }
 }
 
