@@ -47,7 +47,7 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
     [view setBackgroundColor:[UIColor grayColor]];
     
     //Configure the view
-    [_mainImageView setFrame:CGRectMake(0, 0, view.frame.size.width, view.frame.size.width)];
+    [_mainImageView setFrame:CGRectMake(0, 0, view.frame.size.width, MIN(view.frame.size.width, view.frame.size.height*kMGMaxPercentageOverviewHeightInScreen))];
     [_mainImageView setContentMode:UIViewContentModeScaleAspectFill];
     [_mainImageView setImageToBlur:_image blurRadius:kLBBlurredImageDefaultBlurRadius completionBlock:nil];
     [view addSubview:_mainImageView];
