@@ -66,8 +66,6 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
     _startContentOffset = _tableView.contentOffset;
     _lastContentOffsetBlurEffect = _startContentOffset;
     
-    [_overView setBackgroundColor:[UIColor yellowColor]];
-    
     //Pass references
     view.overview = _overView;
     view.tableView = _tableView;

@@ -20,43 +20,56 @@
 
 - (UIView *)myOverView {
     UIView *view = [[UIView alloc] initWithFrame:self.overView.bounds];
-    [view setBackgroundColor:[UIColor redColor]];
     
+    [self mg_addElementOnView:view];
+    
+    return view;
+}
+
+- (BOOL)prefersStatusBarHidden {
+    return YES;
+}
+
+
+#pragma mark - Private methods
+
+- (void)mg_addElementOnView:(UIView *)view
+{
     //Add an example imageView
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
     imageView.translatesAutoresizingMaskIntoConstraints = NO;
     [view addSubview:imageView];
     [view addConstraint:[NSLayoutConstraint constraintWithItem:imageView
-                                                          attribute:NSLayoutAttributeCenterX
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:view
-                                                          attribute:NSLayoutAttributeCenterX
-                                                         multiplier:1
-                                                           constant:0]];
+                                                     attribute:NSLayoutAttributeCenterX
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:view
+                                                     attribute:NSLayoutAttributeCenterX
+                                                    multiplier:1
+                                                      constant:0]];
     
     [view addConstraint:[NSLayoutConstraint constraintWithItem:imageView
-                                                          attribute:NSLayoutAttributeCenterY
+                                                     attribute:NSLayoutAttributeCenterY
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:view
+                                                     attribute:NSLayoutAttributeCenterY
+                                                    multiplier:1
+                                                      constant:0]];
+    
+    [imageView addConstraint:[NSLayoutConstraint constraintWithItem:imageView
+                                                          attribute:NSLayoutAttributeHeight
                                                           relatedBy:NSLayoutRelationEqual
-                                                             toItem:view
-                                                          attribute:NSLayoutAttributeCenterY
+                                                             toItem:nil
+                                                          attribute:NSLayoutAttributeNotAnAttribute
                                                          multiplier:1
-                                                           constant:0]];
+                                                           constant:100.0]];
     
     [imageView addConstraint:[NSLayoutConstraint constraintWithItem:imageView
-                                                      attribute:NSLayoutAttributeHeight
-                                                      relatedBy:NSLayoutRelationEqual
-                                                         toItem:nil
-                                                      attribute:NSLayoutAttributeNotAnAttribute
-                                                     multiplier:1
-                                                       constant:100.0]];
-    
-    [imageView addConstraint:[NSLayoutConstraint constraintWithItem:imageView
-                                                       attribute:NSLayoutAttributeWidth
-                                                       relatedBy:NSLayoutRelationEqual
-                                                          toItem:nil
-                                                       attribute:NSLayoutAttributeNotAnAttribute
-                                                      multiplier:1
-                                                        constant:100.0]];
+                                                          attribute:NSLayoutAttributeWidth
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:nil
+                                                          attribute:NSLayoutAttributeNotAnAttribute
+                                                         multiplier:1
+                                                           constant:100.0]];
     
     [imageView setContentMode:UIViewContentModeScaleAspectFill];
     [imageView setClipsToBounds:YES];
@@ -65,6 +78,11 @@
     [imageView.layer setBorderWidth:2.0];
     [imageView.layer setCornerRadius:50.0];
     imageView.userInteractionEnabled = YES;
+    
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    tapRecognizer.numberOfTapsRequired = 1;
+    [imageView addGestureRecognizer:tapRecognizer];
+    
     
     //Add an example label
     UILabel *lblTitle = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -88,26 +106,28 @@
                                                       constant:10.0]];
     
     [lblTitle addConstraint:[NSLayoutConstraint constraintWithItem:lblTitle
-                                                          attribute:NSLayoutAttributeHeight
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:nil
-                                                          attribute:NSLayoutAttributeNotAnAttribute
-                                                         multiplier:1
-                                                           constant:30.0]];
+                                                         attribute:NSLayoutAttributeHeight
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:nil
+                                                         attribute:NSLayoutAttributeNotAnAttribute
+                                                        multiplier:1
+                                                          constant:30.0]];
     
     [lblTitle addConstraint:[NSLayoutConstraint constraintWithItem:lblTitle
-                                                          attribute:NSLayoutAttributeWidth
-                                                          relatedBy:NSLayoutRelationGreaterThanOrEqual
-                                                             toItem:nil
-                                                          attribute:NSLayoutAttributeNotAnAttribute
-                                                         multiplier:1
-                                                           constant:240.0]];
+                                                         attribute:NSLayoutAttributeWidth
+                                                         relatedBy:NSLayoutRelationGreaterThanOrEqual
+                                                            toItem:nil
+                                                         attribute:NSLayoutAttributeNotAnAttribute
+                                                        multiplier:1
+                                                          constant:240.0]];
     
     [lblTitle setText:@"Name Surname"];
     [lblTitle setFont:[UIFont boldSystemFontOfSize:25.0]];
     [lblTitle setTextAlignment:NSTextAlignmentCenter];
     [lblTitle setTextColor:[UIColor whiteColor]];
     
+    
+    //Add an example button
     UIButton *btContact = [[UIButton alloc] initWithFrame:CGRectZero];
     btContact.translatesAutoresizingMaskIntoConstraints = NO;
     [view addSubview:btContact];
@@ -129,37 +149,28 @@
                                                       constant:10.0]];
     
     [btContact addConstraint:[NSLayoutConstraint constraintWithItem:btContact
-                                                         attribute:NSLayoutAttributeHeight
-                                                         relatedBy:NSLayoutRelationEqual
-                                                            toItem:nil
-                                                         attribute:NSLayoutAttributeNotAnAttribute
-                                                        multiplier:1
-                                                          constant:35.0]];
+                                                          attribute:NSLayoutAttributeHeight
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:nil
+                                                          attribute:NSLayoutAttributeNotAnAttribute
+                                                         multiplier:1
+                                                           constant:35.0]];
     
     [btContact addConstraint:[NSLayoutConstraint constraintWithItem:btContact
-                                                         attribute:NSLayoutAttributeWidth
-                                                         relatedBy:NSLayoutRelationEqual
-                                                            toItem:nil
-                                                         attribute:NSLayoutAttributeNotAnAttribute
-                                                        multiplier:1
-                                                          constant:70.0]];
+                                                          attribute:NSLayoutAttributeWidth
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:nil
+                                                          attribute:NSLayoutAttributeNotAnAttribute
+                                                         multiplier:1
+                                                           constant:70.0]];
     
     [btContact setTitle:@"Contact" forState:UIControlStateNormal];
     [btContact addTarget:self action:@selector(actionContact:) forControlEvents:UIControlEventTouchUpInside];
     btContact.backgroundColor = [UIColor darkGrayColor];
     btContact.titleLabel.font = [UIFont fontWithName:@"Verdana" size:12.0];
     btContact.layer.cornerRadius = 5.0;
-    
-    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
-    tapRecognizer.numberOfTapsRequired = 1;
-    [imageView addGestureRecognizer:tapRecognizer];
-    
-    return view;
 }
 
-- (BOOL)prefersStatusBarHidden {
-    return YES;
-}
 
 #pragma mark - UITableView Delegate & Datasource
 
