@@ -14,11 +14,13 @@
 
 @implementation MGViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [self setOverView:self.myOverView];
 }
 
-- (UIView *)myOverView {
+- (UIView *)myOverView
+{
     UIView *view = [[UIView alloc] initWithFrame:self.overView.bounds];
     
     [self mg_addElementOnView:view];
@@ -26,7 +28,8 @@
     return view;
 }
 
-- (BOOL)prefersStatusBarHidden {
+- (BOOL)prefersStatusBarHidden
+{
     return YES;
 }
 

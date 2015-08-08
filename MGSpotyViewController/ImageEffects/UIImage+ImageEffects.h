@@ -93,7 +93,8 @@
  5/3/2013
  */
 
-#import <UIKit/UIKit.h>
+@import UIKit;
+
 
 @interface UIImage (ImageEffects)
 

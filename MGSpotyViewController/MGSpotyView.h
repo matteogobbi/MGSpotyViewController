@@ -6,7 +6,8 @@
 //  Copyright (c) 2015 Matteo Gobbi. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
+
 
 @interface MGSpotyView : UIView
 
