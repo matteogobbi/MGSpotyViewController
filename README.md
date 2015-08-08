@@ -91,7 +91,7 @@ But to make the size adaptable to the screen without any issue, the best thing w
     UIView *view = [[UIView alloc] initWithFrame:self.overView.bounds];
 ```
 
-Another thing to configure is the `tableView`. The `tableView` is already in the `MGSpotyViewController`, you have just to set the `MGSpotyViewControllerDataSource` and `MGSpotyViewControllerDelegate` and their its methods.
+Another thing to configure is the `tableView`. The `tableView` is already in the `MGSpotyViewController`, you have just to set the `MGSpotyViewControllerDataSource` and `MGSpotyViewControllerDelegate` and use their methods.
 
 You must <b>remember that the section 0 is reserved, so you have to return 1 section in more and managing only your sections (section > 0)</b>:
 
