@@ -18,6 +18,11 @@ CGFloat const kMGOffsetBlurEffect = 2.0;
 static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
 
 
+@interface MGSpotyViewController () <UITableViewDelegate, UITableViewDataSource>
+
+@end
+
+
 @implementation MGSpotyViewController {
     CGPoint startContentOffset_;
     CGPoint lastContentOffsetBlurEffect_;
@@ -65,7 +70,7 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
     _overView.backgroundColor = [UIColor clearColor];
     [view addSubview:_overView];
     
-    _tableView.frame = view.bounds;
+    _tableView.frame = view.frame;
     _tableView.showsVerticalScrollIndicator = NO;
     _tableView.backgroundColor = [UIColor clearColor];
     _tableView.delegate = self;
@@ -200,39 +205,26 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return [self.delegate spotyViewController:self numberOfSectionsInTableView:tableView];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return (section == 1) ? 20 : 0;
+    return [self.delegate spotyViewController:self withTableView:tableView numberOfRowsInSection:section];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *identifier = @"CellID";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    
-    if(!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-        cell.backgroundColor = [UIColor darkGrayColor];
-        cell.textLabel.textColor = [UIColor whiteColor];
-    }
-    
-    cell.textLabel.text = @"Cell";
-    
-    return cell;
+    return [self.delegate spotyViewController:self withTableView:tableView cellForRowAtIndexPath:indexPath];
 }
 
 
-#pragma mark - UITableViewDelegate & Datasource
+#pragma mark - UITableViewDelegate
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    if(section == 0) {
-        UIView *transparentView = [[UIView alloc] initWithFrame:_overView.bounds];
-        [transparentView setBackgroundColor:[UIColor clearColor]];
-        return transparentView;
+    if ([self.delegate respondsToSelector:@selector(spotyViewController:withTableView:viewForHeaderInSection:)]) {
+        return [self.delegate spotyViewController:self withTableView:tableView viewForHeaderInSection:section];
     }
     
     return nil;
@@ -240,7 +232,20 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return (section == 0) ? CGRectGetHeight(_overView.frame) : 0.0;
+    if ([self.delegate respondsToSelector:@selector(spotyViewController:withTableView:heightForHeaderInSection:)]) {
+        return [self.delegate spotyViewController:self withTableView:tableView heightForHeaderInSection:section];
+    }
+    
+    return 0.0;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if ([self.delegate respondsToSelector:@selector(spotyViewController:withTableView:titleForHeaderInSection:)]) {
+        return [self.delegate spotyViewController:self withTableView:tableView titleForHeaderInSection:section];
+    }
+    
+    return nil;
 }
 
 

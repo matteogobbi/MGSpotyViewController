@@ -7,15 +7,33 @@
 //
 
 #import "MGViewController.h"
+#import "MGViewControllerDelegate.h"
+
 
 @interface MGViewController ()
 
 @end
 
-@implementation MGViewController
+
+
+@implementation MGViewController {
+    MGViewControllerDelegate *delegate_;
+}
+
+- (instancetype)initWithMainImage:(UIImage *)image
+{
+    self = [super initWithMainImage:image];
+    if (self) {
+        delegate_ = [MGViewControllerDelegate new];
+    }
+    return self;
+}
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
+    
+    self.delegate = delegate_;
     [self setOverView:self.myOverView];
 }
 
@@ -175,62 +193,6 @@
 }
 
 
-#pragma mark - UITableView Delegate & Datasource
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if(section == 0)
-        return [super tableView:tableView viewForHeaderInSection:section];
-    
-    return nil;
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    if(section == 1)
-        return @"My Section";
-    
-    return nil;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if(section == 0)
-        return [super tableView:tableView heightForHeaderInSection:section];
-    
-    if(section == 1)
-        return 20.0;
-    
-    return 0.0;
-}
-
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    NSInteger mySections = 1;
-    
-    return mySections + 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if(section == 1)
-        return 20;
-    
-    return 0;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *identifier = @"CellID";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    
-    if(!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-        [cell setBackgroundColor:[UIColor darkGrayColor]];
-        [cell.textLabel setTextColor:[UIColor whiteColor]];
-    }
-    
-    [cell.textLabel setText:@"Cell"];
-    
-    return cell;
-}
-
-
 #pragma mark - Action
 
 - (void)actionContact:(id)sender
@@ -243,8 +205,7 @@
 
 - (void)handleTap:(UITapGestureRecognizer *)sender
 {
-    if (sender.state == UIGestureRecognizerStateEnded)
-    {
+    if (sender.state == UIGestureRecognizerStateEnded) {
         [[[UIAlertView alloc] initWithTitle:@"Gesture recognizer" message:@"Touched image" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }
 }
