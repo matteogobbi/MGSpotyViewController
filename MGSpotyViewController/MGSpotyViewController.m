@@ -130,6 +130,14 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
 }
 
 
+#pragma mark - Public methods
+
+- (void)registerCellClass:(Class)cellClass forCellReuseIdentifier:(NSString *)identifier
+{
+    [_tableView registerClass:cellClass forCellReuseIdentifier:identifier];
+}
+
+
 #pragma mark - Private methods
 
 - (UIImage *)mg_resizeImage:(UIImage *)image

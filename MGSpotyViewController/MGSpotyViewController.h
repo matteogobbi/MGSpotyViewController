@@ -54,4 +54,12 @@ extern CGFloat const kMGOffsetBlurEffect;
  */
 - (void)setMainImage:(UIImage *)image;
 
+/**
+ *  Register class for the tableview
+ *
+ *  @param cellClass  Cell class
+ *  @param identifier cell isdentifier
+ */
+- (void)registerCellClass:(Class)cellClass forCellReuseIdentifier:(NSString *)identifier;
+
 @end
