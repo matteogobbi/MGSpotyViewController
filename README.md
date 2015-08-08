@@ -91,49 +91,50 @@ But to make the size adaptable to the screen without any issue, the best thing w
     UIView *view = [[UIView alloc] initWithFrame:self.overView.bounds];
 ```
 
-Another thing to configure is the `tableView`. The `tableView` is already in the `MGSpotyViewController`, you have just to set the `MGSpotyViewControllerProtocol` delegate and use its methods.
+Another thing to configure is the `tableView`. The `tableView` is already in the `MGSpotyViewController`, you have just to set the `MGSpotyViewControllerDataSource` and `MGSpotyViewControllerDelegate` and their its methods.
 
 You must <b>remember that the section 0 is reserved, so you have to return 1 section in more and managing only your sections (section > 0)</b>:
 
 ``` objective-c
-    #pragma mark - MGSpotyViewControllerProtocol
+#pragma mark - MGSpotyViewControllerDataSource
 
     - (NSInteger)spotyViewController:(MGSpotyViewController *)spotyViewController
      numberOfSectionsInTableView:(UITableView *)tableView
     {
-        NSInteger mySections = 1;
-        return mySections + 1;
+      NSInteger mySections = 1;
+      return mySections + 1;
     }
 
     - (NSInteger)spotyViewController:(MGSpotyViewController *)spotyViewController
-                       withTableView:(UITableView *)tableView
-               numberOfRowsInSection:(NSInteger)section
+                   withTableView:(UITableView *)tableView
+           numberOfRowsInSection:(NSInteger)section
     {
-        return (section == 1) ? 20 : 0;
+      return (section == 1) ? 20 : 0;
     }
 
     - (UITableViewCell *)spotyViewController:(MGSpotyViewController *)spotyViewController
-                               withTableView:(UITableView *)tableView
-                       cellForRowAtIndexPath:(NSIndexPath *)indexPath
+                           withTableView:(UITableView *)tableView
+                   cellForRowAtIndexPath:(NSIndexPath *)indexPath
     {
-        static NSString *identifier = @"CellID";
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+      static NSString *identifier = @"CellID";
+      UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
 
-        if(!cell) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-            cell.backgroundColor = [UIColor darkGrayColor];
-            cell.textLabel.textColor = [UIColor whiteColor];
-        }
+      if(!cell) {
+          cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+          cell.backgroundColor = [UIColor darkGrayColor];
+          cell.textLabel.textColor = [UIColor whiteColor];
+      }
 
-        cell.textLabel.text = @"Cell";
+      cell.textLabel.text = @"Cell";
 
-        return cell;
+      return cell;
     }
 ```
 
-And, if you need to manage <b>sections header title</b> or <b>sections header view, for the section 0 you should use the `MGSpotyViewControllerProtocol` methods</b>, like in the example below:
+And, if you need to manage <b>sections header title</b> or <b>sections header view, for the section 0 you should use the</b> `MGSpotyViewControllerDelegate` <b>methods</b>, like in the example below:
 
 ```objective-c
+  #pragma mark - MGSpotyViewControllerDelegate
 
     - (UIView *)spotyViewController:(MGSpotyViewController *)spotyViewController
                   withTableView:(UITableView *)tableView
@@ -149,7 +150,7 @@ And, if you need to manage <b>sections header title</b> or <b>sections header vi
     }
 
     - (CGFloat)spotyViewController:(MGSpotyViewController *)spotyViewController
-                 withTableView:(UITableView *)tableView
+                withTableView:(UITableView *)tableView
       heightForHeaderInSection:(NSInteger)section
     {
       switch (section) {

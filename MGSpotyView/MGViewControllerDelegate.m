@@ -13,38 +13,13 @@
 @implementation MGViewControllerDelegate
 
 
-#pragma mark - MGSpotyViewControllerProtocol
+#pragma mark - MGSpotyViewControllerDelegate
 
-- (NSInteger)spotyViewController:(MGSpotyViewController *)spotyViewController
-     numberOfSectionsInTableView:(UITableView *)tableView
+- (CGFloat)spotyViewController:(MGSpotyViewController *)spotyViewController
+                 withTableView:(UITableView *)tableView
+       heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSInteger mySections = 1;
-    return mySections + 1;
-}
-
-- (NSInteger)spotyViewController:(MGSpotyViewController *)spotyViewController
-                   withTableView:(UITableView *)tableView
-           numberOfRowsInSection:(NSInteger)section
-{
-    return (section == 1) ? 20 : 0;
-}
-
-- (UITableViewCell *)spotyViewController:(MGSpotyViewController *)spotyViewController
-                           withTableView:(UITableView *)tableView
-                   cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *identifier = @"CellID";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    
-    if(!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-        cell.backgroundColor = [UIColor darkGrayColor];
-        cell.textLabel.textColor = [UIColor whiteColor];
-    }
-    
-    cell.textLabel.text = @"Cell";
-    
-    return cell;
+    return 60.0;
 }
 
 - (UIView *)spotyViewController:(MGSpotyViewController *)spotyViewController

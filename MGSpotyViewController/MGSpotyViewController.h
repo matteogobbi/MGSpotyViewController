@@ -8,17 +8,15 @@
 
 @import UIKit;
 
-#import "MGSpotyViewControllerProtocol.h"
+#import "MGSpotyViewControllerDataSource.h"
+#import "MGSpotyViewControllerDelegate.h"
+
 
 extern CGFloat const kMGOffsetEffects;
 extern CGFloat const kMGOffsetBlurEffect;
 
 
 @interface MGSpotyViewController : UIViewController
-/**
- *  Main TableView object
- */
-@property (nonatomic, strong) UITableView *tableView;
 
 /**
  *  Overview object
@@ -31,9 +29,14 @@ extern CGFloat const kMGOffsetBlurEffect;
 @property (nonatomic, strong) UIImageView *mainImageView;
 
 /**
- *  The MGSpotyViewController delegate. This protocol wraps the tableview datasource and delegate
+ *  The MGSpotyViewController dataSource. This protocol wraps the tableview datasource
  */
-@property (nonatomic, weak) id <MGSpotyViewControllerProtocol> delegate;
+@property (nonatomic, weak) id <MGSpotyViewControllerDataSource> dataSource;
+
+/**
+ *  The MGSpotyViewController delegate. This protocol wraps the tableview delegate
+ */
+@property (nonatomic, weak) id <MGSpotyViewControllerDelegate> delegate;
 
 /**
  *  Initialize method for MGSpotyViewController

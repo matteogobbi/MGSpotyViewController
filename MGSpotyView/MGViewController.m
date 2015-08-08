@@ -7,6 +7,7 @@
 //
 
 #import "MGViewController.h"
+#import "MGViewControllerDataSource.h"
 #import "MGViewControllerDelegate.h"
 
 
@@ -18,12 +19,14 @@
 
 @implementation MGViewController {
     MGViewControllerDelegate *delegate_;
+    MGViewControllerDataSource *dataSource_;
 }
 
 - (instancetype)initWithMainImage:(UIImage *)image
 {
     self = [super initWithMainImage:image];
     if (self) {
+        dataSource_ = [MGViewControllerDataSource new];
         delegate_ = [MGViewControllerDelegate new];
     }
     return self;
@@ -33,7 +36,9 @@
 {
     [super viewDidLoad];
     
+    self.dataSource = dataSource_;
     self.delegate = delegate_;
+    
     [self setOverView:self.myOverView];
 }
 

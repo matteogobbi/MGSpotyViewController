@@ -8,9 +8,9 @@
 
 @import Foundation;
 
-#import "MGSpotyViewControllerProtocol.h"
+#import "MGSpotyViewControllerDelegate.h"
 
 
-@interface MGViewControllerDelegate : NSObject <MGSpotyViewControllerProtocol>
+@interface MGViewControllerDelegate : NSObject <MGSpotyViewControllerDelegate>
 
 @end

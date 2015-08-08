@@ -25,6 +25,7 @@
 		65E924BE195D825200EA4236 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 65E924BB195D825200EA4236 /* UIImage+ImageEffects.m */; };
 		65E924BF195D825200EA4236 /* UIImageView+LBBlurredImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 65E924BD195D825200EA4236 /* UIImageView+LBBlurredImage.m */; };
 		9A5BC7791B761DA5001D319F /* MGViewControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A5BC7781B761DA5001D319F /* MGViewControllerDelegate.m */; };
+		9A5BC77F1B76316D001D319F /* MGViewControllerDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A5BC77E1B76316D001D319F /* MGViewControllerDataSource.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,9 +65,12 @@
 		65E924BB195D825200EA4236 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		65E924BC195D825200EA4236 /* UIImageView+LBBlurredImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+LBBlurredImage.h"; sourceTree = "<group>"; };
 		65E924BD195D825200EA4236 /* UIImageView+LBBlurredImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+LBBlurredImage.m"; sourceTree = "<group>"; };
-		9A5BC7741B761BCD001D319F /* MGSpotyViewControllerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSpotyViewControllerProtocol.h; sourceTree = "<group>"; };
+		9A5BC7741B761BCD001D319F /* MGSpotyViewControllerDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSpotyViewControllerDataSource.h; sourceTree = "<group>"; };
 		9A5BC7771B761DA5001D319F /* MGViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGViewControllerDelegate.h; sourceTree = "<group>"; };
 		9A5BC7781B761DA5001D319F /* MGViewControllerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGViewControllerDelegate.m; sourceTree = "<group>"; };
+		9A5BC77A1B762FB4001D319F /* MGSpotyViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSpotyViewControllerDelegate.h; sourceTree = "<group>"; };
+		9A5BC77D1B76316D001D319F /* MGViewControllerDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGViewControllerDataSource.h; sourceTree = "<group>"; };
+		9A5BC77E1B76316D001D319F /* MGViewControllerDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGViewControllerDataSource.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +137,8 @@
 				6515A712195B891900A6DBE6 /* MGViewController.m */,
 				9A5BC7771B761DA5001D319F /* MGViewControllerDelegate.h */,
 				9A5BC7781B761DA5001D319F /* MGViewControllerDelegate.m */,
+				9A5BC77D1B76316D001D319F /* MGViewControllerDataSource.h */,
+				9A5BC77E1B76316D001D319F /* MGViewControllerDataSource.m */,
 				6515A6F0195B7AA900A6DBE6 /* Images.xcassets */,
 				6515A6DF195B7AA900A6DBE6 /* Supporting Files */,
 			);
@@ -172,7 +178,8 @@
 			isa = PBXGroup;
 			children = (
 				65E924B9195D825200EA4236 /* ImageEffects */,
-				9A5BC7741B761BCD001D319F /* MGSpotyViewControllerProtocol.h */,
+				9A5BC7741B761BCD001D319F /* MGSpotyViewControllerDataSource.h */,
+				9A5BC77A1B762FB4001D319F /* MGSpotyViewControllerDelegate.h */,
 				6515A70E195B7BC100A6DBE6 /* MGSpotyViewController.h */,
 				6515A70F195B7BC100A6DBE6 /* MGSpotyViewController.m */,
 				65A9FEAC1AA330EF001F31AA /* MGSpotyView.h */,
@@ -298,6 +305,7 @@
 				9A5BC7791B761DA5001D319F /* MGViewControllerDelegate.m in Sources */,
 				65E924BF195D825200EA4236 /* UIImageView+LBBlurredImage.m in Sources */,
 				6515A6E9195B7AA900A6DBE6 /* MGAppDelegate.m in Sources */,
+				9A5BC77F1B76316D001D319F /* MGViewControllerDataSource.m in Sources */,
 				65A9FEAE1AA330EF001F31AA /* MGSpotyView.m in Sources */,
 				6515A6E5195B7AA900A6DBE6 /* main.m in Sources */,
 			);

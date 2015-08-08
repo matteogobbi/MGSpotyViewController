@@ -20,6 +20,11 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
 
 @interface MGSpotyViewController () <UITableViewDelegate, UITableViewDataSource>
 
+/**
+ *  Main TableView object
+ */
+@property (nonatomic, strong) UITableView *tableView;
+
 @end
 
 
@@ -73,6 +78,9 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
     _tableView.frame = view.frame;
     _tableView.showsVerticalScrollIndicator = NO;
     _tableView.backgroundColor = [UIColor clearColor];
+    _tableView.backgroundView = nil;
+    _tableView.separatorColor = [UIColor clearColor];
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [view addSubview:_tableView];
@@ -213,21 +221,30 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [self.delegate spotyViewController:self numberOfSectionsInTableView:tableView];
+    return [self.dataSource spotyViewController:self numberOfSectionsInTableView:tableView];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.delegate spotyViewController:self withTableView:tableView numberOfRowsInSection:section];
+    return [self.dataSource spotyViewController:self withTableView:tableView numberOfRowsInSection:section];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [self.delegate spotyViewController:self withTableView:tableView cellForRowAtIndexPath:indexPath];
+    return [self.dataSource spotyViewController:self withTableView:tableView cellForRowAtIndexPath:indexPath];
 }
 
 
 #pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([self.delegate respondsToSelector:@selector(spotyViewController:withTableView:heightForRowAtIndexPath:)]) {
+        return [self.delegate spotyViewController:self withTableView:tableView heightForRowAtIndexPath:indexPath];
+    }
+    
+    return 44.0;
+}
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
