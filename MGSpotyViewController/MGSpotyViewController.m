@@ -26,7 +26,7 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
 }
 
 
-#pragma mark - Lyce cyrcle
+#pragma mark - Life cycle
 
 - (instancetype)initWithMainImage:(UIImage *)image
 {
@@ -83,28 +83,8 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
     self.view = view;
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    
-    CGRect viewRect = self.view.frame;
-    
-    [_mainImageView setFrame:CGRectMake(0, 0, viewRect.size.width, viewRect.size.width)];
-    
-    CGRect rect = _mainImageView.frame;
-    rect.size.height = MIN(rect.size.height, viewRect.size.height*kMGMaxPercentageOverviewHeightInScreen);
-    [_overView setFrame:rect];
-    
-    [_tableView setFrame:viewRect];
-    
-    //Clear
-    _tableView.contentOffset = (CGPoint){ 0, 0 };
-    startContentOffset_ = _tableView.contentOffset;
-    lastContentOffsetBlurEffect_ = startContentOffset_;
-}
 
-
-#pragma mark - Properties Methods
+#pragma mark - Override accessor methods
 
 - (void)setOverView:(UIView *)overView
 {
@@ -134,6 +114,43 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
     //Copying resized image & setting to blur
     image_ = [image copy];
     [_mainImageView setImageToBlur:image blurRadius:kLBBlurredImageDefaultBlurRadius completionBlock:nil];
+}
+
+
+#pragma mark - Private methods
+
+- (UIImage *)mg_resizeImage:(UIImage *)image
+{
+    UIGraphicsBeginImageContext(_mainImageView.frame.size);
+    [image drawInRect:_mainImageView.bounds];
+    
+    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return scaledImage;
+}
+
+
+#pragma mark - Rotation
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    
+    CGRect viewRect = self.view.frame;
+    
+    [_mainImageView setFrame:CGRectMake(0, 0, viewRect.size.width, viewRect.size.width)];
+    
+    CGRect rect = _mainImageView.frame;
+    rect.size.height = MIN(rect.size.height, viewRect.size.height*kMGMaxPercentageOverviewHeightInScreen);
+    [_overView setFrame:rect];
+    
+    [_tableView setFrame:viewRect];
+    
+    //Clear
+    _tableView.contentOffset = (CGPoint){ 0, 0 };
+    startContentOffset_ = _tableView.contentOffset;
+    lastContentOffsetBlurEffect_ = startContentOffset_;
 }
 
 
@@ -179,40 +196,7 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
 }
 
 
-#pragma mark - Private methods
-
-- (UIImage *)mg_resizeImage:(UIImage *)image
-{
-    UIGraphicsBeginImageContext(_mainImageView.frame.size);
-    [image drawInRect:_mainImageView.bounds];
-    
-    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return scaledImage;
-}
-
-
-#pragma mark - UITableView Delegate & Datasource
-
-/* To override */
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    if(section == 0) {
-        UIView *transparentView = [[UIView alloc] initWithFrame:_overView.bounds];
-        [transparentView setBackgroundColor:[UIColor clearColor]];
-        return transparentView;
-    }
-    
-    return nil;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return (section == 0) ? CGRectGetHeight(_overView.frame) : 0.0;
-}
-
+#pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -231,13 +215,32 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
     
     if(!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-        [cell setBackgroundColor:[UIColor darkGrayColor]];
-        [cell.textLabel setTextColor:[UIColor whiteColor]];
+        cell.backgroundColor = [UIColor darkGrayColor];
+        cell.textLabel.textColor = [UIColor whiteColor];
     }
     
-    [cell.textLabel setText:@"Cell"];
+    cell.textLabel.text = @"Cell";
     
     return cell;
+}
+
+
+#pragma mark - UITableViewDelegate & Datasource
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if(section == 0) {
+        UIView *transparentView = [[UIView alloc] initWithFrame:_overView.bounds];
+        [transparentView setBackgroundColor:[UIColor clearColor]];
+        return transparentView;
+    }
+    
+    return nil;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return (section == 0) ? CGRectGetHeight(_overView.frame) : 0.0;
 }
 
 
