@@ -18,7 +18,8 @@
 - (NSInteger)spotyViewController:(MGSpotyViewController *)spotyViewController
      numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    NSInteger mySections = 1;
+    return mySections + 1;
 }
 
 - (NSInteger)spotyViewController:(MGSpotyViewController *)spotyViewController
