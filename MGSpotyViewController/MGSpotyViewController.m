@@ -135,27 +135,35 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
     return scaledImage;
 }
 
-
-#pragma mark - Rotation
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+- (void)mg_didRotateToSize:(CGSize)size
 {
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    
-    CGRect viewRect = self.view.frame;
-    
-    [_mainImageView setFrame:CGRectMake(0, 0, viewRect.size.width, viewRect.size.width)];
+    [_mainImageView setFrame:CGRectMake(0, 0, size.width, size.width)];
     
     CGRect rect = _mainImageView.frame;
-    rect.size.height = MIN(rect.size.height, viewRect.size.height*kMGMaxPercentageOverviewHeightInScreen);
+    rect.size.height = MIN(rect.size.height, size.height*kMGMaxPercentageOverviewHeightInScreen);
     [_overView setFrame:rect];
     
-    [_tableView setFrame:viewRect];
+    [_tableView setFrame:(CGRect){ 0, 0, size.width, size.height }];
     
     //Clear
     _tableView.contentOffset = (CGPoint){ 0, 0 };
     startContentOffset_ = _tableView.contentOffset;
     lastContentOffsetBlurEffect_ = startContentOffset_;
+}
+
+
+#pragma mark - Rotation
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+                                duration:(NSTimeInterval)duration
+{
+    [self mg_didRotateToSize:(CGSize){ CGRectGetHeight(self.view.bounds), CGRectGetWidth(self.view.bounds) }];
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size
+       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+    [self mg_didRotateToSize:size];
 }
 
 
