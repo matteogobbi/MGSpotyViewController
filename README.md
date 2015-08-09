@@ -98,26 +98,23 @@ You must <b>remember that the section 0 is reserved, so you have to return 1 sec
 ``` objective-c
 #pragma mark - MGSpotyViewControllerDataSource
 
-    - (NSInteger)spotyViewController:(MGSpotyViewController *)spotyViewController
-     numberOfSectionsInTableView:(UITableView *)tableView
+    - (NSInteger)numberOfSectionsInSpotyViewController:(MGSpotyViewController *)spotyViewController
     {
       NSInteger mySections = 1;
       return mySections + 1;
     }
 
     - (NSInteger)spotyViewController:(MGSpotyViewController *)spotyViewController
-                   withTableView:(UITableView *)tableView
            numberOfRowsInSection:(NSInteger)section
     {
       return (section == 1) ? 20 : 0;
     }
 
     - (UITableViewCell *)spotyViewController:(MGSpotyViewController *)spotyViewController
-                           withTableView:(UITableView *)tableView
                    cellForRowAtIndexPath:(NSIndexPath *)indexPath
     {
       static NSString *identifier = @"CellID";
-      UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+      UITableViewCell *cell = [spotyViewController.tableView dequeueReusableCellWithIdentifier:identifier];
 
       if(!cell) {
           cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
@@ -137,7 +134,6 @@ And, if you need to manage <b>sections header title</b> or <b>sections header vi
   #pragma mark - MGSpotyViewControllerDelegate
 
     - (UIView *)spotyViewController:(MGSpotyViewController *)spotyViewController
-                  withTableView:(UITableView *)tableView
          viewForHeaderInSection:(NSInteger)section
     {
       if(section == 0) {
@@ -150,7 +146,6 @@ And, if you need to manage <b>sections header title</b> or <b>sections header vi
     }
 
     - (CGFloat)spotyViewController:(MGSpotyViewController *)spotyViewController
-                withTableView:(UITableView *)tableView
       heightForHeaderInSection:(NSInteger)section
     {
       switch (section) {
@@ -169,7 +164,6 @@ And, if you need to manage <b>sections header title</b> or <b>sections header vi
     }
 
     - (NSString *)spotyViewController:(MGSpotyViewController *)spotyViewController
-                    withTableView:(UITableView *)tableView
           titleForHeaderInSection:(NSInteger)section
     {
       return (section == 1) ? @"My Section" : nil;
