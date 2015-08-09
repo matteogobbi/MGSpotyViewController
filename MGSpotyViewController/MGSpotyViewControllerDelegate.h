@@ -13,16 +13,12 @@
 
 @optional
 - (CGFloat)spotyViewController:(MGSpotyViewController *)spotyViewController
-                 withTableView:(UITableView *)tableView
     heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 - (UIView *)spotyViewController:(MGSpotyViewController *)spotyViewController
-                  withTableView:(UITableView *)tableView
          viewForHeaderInSection:(NSInteger)section;
 - (CGFloat)spotyViewController:(MGSpotyViewController *)spotyViewController
-                 withTableView:(UITableView *)tableView
       heightForHeaderInSection:(NSInteger)section;
 - (NSString *)spotyViewController:(MGSpotyViewController *)spotyViewController
-                    withTableView:(UITableView *)tableView
           titleForHeaderInSection:(NSInteger)section;
 
 @end

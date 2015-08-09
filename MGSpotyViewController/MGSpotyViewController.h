@@ -19,6 +19,11 @@ extern CGFloat const kMGOffsetBlurEffect;
 @interface MGSpotyViewController : UIViewController
 
 /**
+ *  Main TableView object
+ */
+@property (nonatomic, strong) UITableView *tableView;
+
+/**
  *  Overview object
  */
 @property (nonatomic, strong) UIView *overView;

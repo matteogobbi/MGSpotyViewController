@@ -16,14 +16,12 @@
 #pragma mark - MGSpotyViewControllerDelegate
 
 - (CGFloat)spotyViewController:(MGSpotyViewController *)spotyViewController
-                 withTableView:(UITableView *)tableView
        heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 60.0;
 }
 
 - (UIView *)spotyViewController:(MGSpotyViewController *)spotyViewController
-                  withTableView:(UITableView *)tableView
          viewForHeaderInSection:(NSInteger)section
 {
     if(section == 0) {
@@ -36,7 +34,6 @@
 }
 
 - (CGFloat)spotyViewController:(MGSpotyViewController *)spotyViewController
-                 withTableView:(UITableView *)tableView
       heightForHeaderInSection:(NSInteger)section
 {
     switch (section) {
@@ -55,7 +52,6 @@
 }
 
 - (NSString *)spotyViewController:(MGSpotyViewController *)spotyViewController
-                    withTableView:(UITableView *)tableView
           titleForHeaderInSection:(NSInteger)section
 {
     return (section == 1) ? @"My Section" : nil;

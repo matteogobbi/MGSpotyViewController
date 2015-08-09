@@ -20,11 +20,6 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
 
 @interface MGSpotyViewController () <UITableViewDelegate, UITableViewDataSource>
 
-/**
- *  Main TableView object
- */
-@property (nonatomic, strong) UITableView *tableView;
-
 @end
 
 
@@ -229,17 +224,17 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [self.dataSource spotyViewController:self numberOfSectionsInTableView:tableView];
+    return [self.dataSource numberOfSectionsInSpotyViewController:self];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.dataSource spotyViewController:self withTableView:tableView numberOfRowsInSection:section];
+    return [self.dataSource spotyViewController:self numberOfRowsInSection:section];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [self.dataSource spotyViewController:self withTableView:tableView cellForRowAtIndexPath:indexPath];
+    return [self.dataSource spotyViewController:self cellForRowAtIndexPath:indexPath];
 }
 
 
@@ -247,8 +242,8 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self.delegate respondsToSelector:@selector(spotyViewController:withTableView:heightForRowAtIndexPath:)]) {
-        return [self.delegate spotyViewController:self withTableView:tableView heightForRowAtIndexPath:indexPath];
+    if ([self.delegate respondsToSelector:@selector(spotyViewController:heightForRowAtIndexPath:)]) {
+        return [self.delegate spotyViewController:self heightForRowAtIndexPath:indexPath];
     }
     
     return 44.0;
@@ -256,8 +251,8 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    if ([self.delegate respondsToSelector:@selector(spotyViewController:withTableView:viewForHeaderInSection:)]) {
-        return [self.delegate spotyViewController:self withTableView:tableView viewForHeaderInSection:section];
+    if ([self.delegate respondsToSelector:@selector(spotyViewController:viewForHeaderInSection:)]) {
+        return [self.delegate spotyViewController:self viewForHeaderInSection:section];
     }
     
     return nil;
@@ -265,8 +260,8 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if ([self.delegate respondsToSelector:@selector(spotyViewController:withTableView:heightForHeaderInSection:)]) {
-        return [self.delegate spotyViewController:self withTableView:tableView heightForHeaderInSection:section];
+    if ([self.delegate respondsToSelector:@selector(spotyViewController:heightForHeaderInSection:)]) {
+        return [self.delegate spotyViewController:self heightForHeaderInSection:section];
     }
     
     return 0.0;
@@ -274,8 +269,8 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if ([self.delegate respondsToSelector:@selector(spotyViewController:withTableView:titleForHeaderInSection:)]) {
-        return [self.delegate spotyViewController:self withTableView:tableView titleForHeaderInSection:section];
+    if ([self.delegate respondsToSelector:@selector(spotyViewController:titleForHeaderInSection:)]) {
+        return [self.delegate spotyViewController:self titleForHeaderInSection:section];
     }
     
     return nil;
