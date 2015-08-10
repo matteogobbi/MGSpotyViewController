@@ -98,16 +98,10 @@ You must <b>remember that the section 0 is reserved, so you have to return 1 sec
 ``` objective-c
 #pragma mark - MGSpotyViewControllerDataSource
 
-    - (NSInteger)numberOfSectionsInSpotyViewController:(MGSpotyViewController *)spotyViewController
-    {
-      NSInteger mySections = 1;
-      return mySections + 1;
-    }
-
     - (NSInteger)spotyViewController:(MGSpotyViewController *)spotyViewController
            numberOfRowsInSection:(NSInteger)section
     {
-      return (section == 1) ? 20 : 0;
+      return 20;
     }
 
     - (UITableViewCell *)spotyViewController:(MGSpotyViewController *)spotyViewController
@@ -133,40 +127,16 @@ And, if you need to manage <b>sections header title</b> or <b>sections header vi
 ```objective-c
   #pragma mark - MGSpotyViewControllerDelegate
 
-    - (UIView *)spotyViewController:(MGSpotyViewController *)spotyViewController
-         viewForHeaderInSection:(NSInteger)section
-    {
-      if(section == 0) {
-          UIView *transparentView = [[UIView alloc] initWithFrame:spotyViewController.overView.bounds];
-          [transparentView setBackgroundColor:[UIColor clearColor]];
-          return transparentView;
-      }
-
-      return nil;
-    }
-
     - (CGFloat)spotyViewController:(MGSpotyViewController *)spotyViewController
       heightForHeaderInSection:(NSInteger)section
     {
-      switch (section) {
-          case 0:
-              return CGRectGetHeight(spotyViewController.overView.frame);
-              break;
-
-          case 1:
-              return 20.0;
-              break;
-
-          default:
-              return 0.0;
-              break;
-      }
+      return 20.0;
     }
 
     - (NSString *)spotyViewController:(MGSpotyViewController *)spotyViewController
           titleForHeaderInSection:(NSInteger)section
     {
-      return (section == 1) ? @"My Section" : nil;
+      return @"My Section";
     }
 ```
 
