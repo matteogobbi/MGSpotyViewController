@@ -12,10 +12,12 @@
 @protocol MGSpotyViewControllerDataSource <NSObject>
 
 @required
-- (NSInteger)numberOfSectionsInSpotyViewController:(MGSpotyViewController *)spotyViewController;
 - (NSInteger)spotyViewController:(MGSpotyViewController *)spotyViewController
            numberOfRowsInSection:(NSInteger)section;
 - (UITableViewCell *)spotyViewController:(MGSpotyViewController *)spotyViewController
          cellForRowAtIndexPath:(NSIndexPath *)indexPath;
+
+@optional
+- (NSInteger)numberOfSectionsInSpotyViewController:(MGSpotyViewController *)spotyViewController;
 
 @end

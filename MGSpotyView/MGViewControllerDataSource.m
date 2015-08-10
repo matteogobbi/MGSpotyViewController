@@ -15,11 +15,6 @@
 
 #pragma mark - MGSpotyViewControllerDataSource
 
-- (NSInteger)numberOfSectionsInSpotyViewController:(MGSpotyViewController *)spotyViewController
-{
-    return 1;
-}
-
 - (NSInteger)spotyViewController:(MGSpotyViewController *)spotyViewController
            numberOfRowsInSection:(NSInteger)section
 {

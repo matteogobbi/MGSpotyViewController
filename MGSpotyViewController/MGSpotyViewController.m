@@ -224,7 +224,11 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [self.dataSource numberOfSectionsInSpotyViewController:self] + 1;
+    if ([self.dataSource respondsToSelector:@selector(numberOfSectionsInSpotyViewController:)]) {
+        return [self.dataSource numberOfSectionsInSpotyViewController:self] + 1;
+    }
+    
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
