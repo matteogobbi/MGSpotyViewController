@@ -17,14 +17,13 @@
 
 - (NSInteger)numberOfSectionsInSpotyViewController:(MGSpotyViewController *)spotyViewController
 {
-    NSInteger mySections = 1;
-    return mySections + 1;
+    return 1;
 }
 
 - (NSInteger)spotyViewController:(MGSpotyViewController *)spotyViewController
            numberOfRowsInSection:(NSInteger)section
 {
-    return (section == 1) ? 20 : 0;
+    return 20;
 }
 
 - (UITableViewCell *)spotyViewController:(MGSpotyViewController *)spotyViewController

@@ -21,40 +21,16 @@
     return 60.0;
 }
 
-- (UIView *)spotyViewController:(MGSpotyViewController *)spotyViewController
-         viewForHeaderInSection:(NSInteger)section
-{
-    if(section == 0) {
-        UIView *transparentView = [[UIView alloc] initWithFrame:spotyViewController.overView.bounds];
-        [transparentView setBackgroundColor:[UIColor clearColor]];
-        return transparentView;
-    }
-    
-    return nil;
-}
-
 - (CGFloat)spotyViewController:(MGSpotyViewController *)spotyViewController
       heightForHeaderInSection:(NSInteger)section
 {
-    switch (section) {
-        case 0:
-            return CGRectGetHeight(spotyViewController.overView.frame);
-            break;
-            
-        case 1:
-            return 20.0;
-            break;
-            
-        default:
-            return 0.0;
-            break;
-    }
+    return 20.0;
 }
 
 - (NSString *)spotyViewController:(MGSpotyViewController *)spotyViewController
           titleForHeaderInSection:(NSInteger)section
 {
-    return (section == 1) ? @"My Section" : nil;
+    return @"My Section";
 }
 
 

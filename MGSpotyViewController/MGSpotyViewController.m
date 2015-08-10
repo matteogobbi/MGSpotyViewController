@@ -224,12 +224,16 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [self.dataSource numberOfSectionsInSpotyViewController:self];
+    return [self.dataSource numberOfSectionsInSpotyViewController:self] + 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.dataSource spotyViewController:self numberOfRowsInSection:section];
+    if (section != 0) {
+        return [self.dataSource spotyViewController:self numberOfRowsInSection:section];
+    }
+    
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -251,7 +255,11 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    if ([self.delegate respondsToSelector:@selector(spotyViewController:viewForHeaderInSection:)]) {
+    if(section == 0) {
+        UIView *transparentView = [[UIView alloc] initWithFrame:self.overView.bounds];
+        [transparentView setBackgroundColor:[UIColor clearColor]];
+        return transparentView;
+    } else if ([self.delegate respondsToSelector:@selector(spotyViewController:viewForHeaderInSection:)]) {
         return [self.delegate spotyViewController:self viewForHeaderInSection:section];
     }
     
@@ -260,16 +268,16 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if ([self.delegate respondsToSelector:@selector(spotyViewController:heightForHeaderInSection:)]) {
+    if (section != 0 && [self.delegate respondsToSelector:@selector(spotyViewController:heightForHeaderInSection:)]) {
         return [self.delegate spotyViewController:self heightForHeaderInSection:section];
     }
     
-    return 0.0;
+    return CGRectGetHeight(self.overView.frame);
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if ([self.delegate respondsToSelector:@selector(spotyViewController:titleForHeaderInSection:)]) {
+    if (section != 0 && [self.delegate respondsToSelector:@selector(spotyViewController:titleForHeaderInSection:)]) {
         return [self.delegate spotyViewController:self titleForHeaderInSection:section];
     }
     
