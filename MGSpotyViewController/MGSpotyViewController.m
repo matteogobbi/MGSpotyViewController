@@ -272,11 +272,13 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (section != 0 && [self.delegate respondsToSelector:@selector(spotyViewController:heightForHeaderInSection:)]) {
+    if (section == 0) {
+        return CGRectGetHeight(self.overView.frame);
+    } else if (section != 0 && [self.delegate respondsToSelector:@selector(spotyViewController:heightForHeaderInSection:)]) {
         return [self.delegate spotyViewController:self heightForHeaderInSection:section];
     }
     
-    return CGRectGetHeight(self.overView.frame);
+    return 0.0;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
