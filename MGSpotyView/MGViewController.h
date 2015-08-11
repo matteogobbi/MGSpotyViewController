@@ -8,7 +8,7 @@
 
 #import "MGSpotyViewController.h"
 
-@interface MGViewController : MGSpotyViewController
 
+@interface MGViewController : MGSpotyViewController
 
 @end

@@ -6,7 +6,8 @@
 //  Copyright (c) 2012 Luca Bernardi. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
+
 
 typedef void(^LBBlurredImageCompletionBlock)(void);
 

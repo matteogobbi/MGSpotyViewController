@@ -7,9 +7,10 @@
 //
 
 #import "MGSpotyViewController.h"
+#import "MGSpotyView.h"
+
 #import "UIImageView+LBBlurredImage.h"
 
-#import "MGSpotyView.h"
 
 CGFloat const kMGOffsetEffects = 40.0;
 CGFloat const kMGOffsetBlurEffect = 2.0;
@@ -17,23 +18,35 @@ CGFloat const kMGOffsetBlurEffect = 2.0;
 static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
 
 
+@interface MGSpotyViewController () <UITableViewDelegate, UITableViewDataSource>
+
+@end
+
 
 @implementation MGSpotyViewController {
-    CGPoint _startContentOffset;
-    CGPoint _lastContentOffsetBlurEffect;
-    UIImage *_image;
-    NSOperationQueue *_operationQueue;
+    CGPoint startContentOffset_;
+    CGPoint lastContentOffsetBlurEffect_;
+    UIImage *image_;
+    NSOperationQueue *operationQueue_;
 }
 
-- (instancetype)initWithMainImage:(UIImage *)image {
+
+#pragma mark - Life cycle
+
+- (instancetype)initWithMainImage:(UIImage *)image
+{
     if(self = [super init]) {
-        _image = [image copy];
+        image_ = [image copy];
+        
         _mainImageView = [UIImageView new];
-        [_mainImageView setImage:_image];
+        _mainImageView.image = image_;
+        
         _overView = [UIView new];
+        
         _tableView = [UITableView new];
-        _operationQueue = [[NSOperationQueue alloc]init];
-        _operationQueue.maxConcurrentOperationCount = 1;
+        
+        operationQueue_ = [[NSOperationQueue alloc]init];
+        operationQueue_.maxConcurrentOperationCount = 1;
     }
     
     return self;
@@ -42,29 +55,33 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
 - (void)loadView
 {
     //Create the view
-    MGSpotyView *view = [[MGSpotyView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    [view setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-    [view setBackgroundColor:[UIColor grayColor]];
+    MGSpotyView *view = [[MGSpotyView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    view.backgroundColor = [UIColor grayColor];
     
     //Configure the view
-    [_mainImageView setFrame:CGRectMake(0, 0, view.frame.size.width, MIN(view.frame.size.width, view.frame.size.height*kMGMaxPercentageOverviewHeightInScreen))];
-    [_mainImageView setContentMode:UIViewContentModeScaleAspectFill];
-    [_mainImageView setImageToBlur:_image blurRadius:kLBBlurredImageDefaultBlurRadius completionBlock:nil];
+    CGFloat viewWidth = CGRectGetWidth(view.frame);
+    _mainImageView.frame = (CGRect){ 0, 0, viewWidth, MIN(viewWidth, CGRectGetHeight(view.frame)*kMGMaxPercentageOverviewHeightInScreen) };
+    _mainImageView.contentMode = UIViewContentModeScaleAspectFill;
+    [_mainImageView setImageToBlur:image_ blurRadius:kLBBlurredImageDefaultBlurRadius completionBlock:nil];
     [view addSubview:_mainImageView];
     
-    [_overView setFrame:_mainImageView.bounds];
-    [_overView setBackgroundColor:[UIColor clearColor]];
+    _overView.frame = _mainImageView.bounds;
+    _overView.backgroundColor = [UIColor clearColor];
     [view addSubview:_overView];
     
-    [_tableView setFrame:view.frame];
-    [_tableView setShowsVerticalScrollIndicator:NO];
-    [_tableView setBackgroundColor:[UIColor clearColor]];
-    [_tableView setDelegate:self];
-    [_tableView setDataSource:self];
+    _tableView.frame = view.frame;
+    _tableView.showsVerticalScrollIndicator = NO;
+    _tableView.backgroundColor = [UIColor clearColor];
+    _tableView.backgroundView = nil;
+    _tableView.separatorColor = [UIColor clearColor];
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
     [view addSubview:_tableView];
     
-    _startContentOffset = _tableView.contentOffset;
-    _lastContentOffsetBlurEffect = _startContentOffset;
+    startContentOffset_ = _tableView.contentOffset;
+    lastContentOffsetBlurEffect_ = startContentOffset_;
     
     //Pass references
     view.overview = _overView;
@@ -74,30 +91,11 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
     self.view = view;
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+
+#pragma mark - Override accessor methods
+
+- (void)setOverView:(UIView *)overView
 {
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    
-    CGRect viewRect = self.view.frame;
-    
-    [_mainImageView setFrame:CGRectMake(0, 0, viewRect.size.width, viewRect.size.width)];
-    
-    CGRect rect = _mainImageView.frame;
-    rect.size.height = MIN(rect.size.height, viewRect.size.height*kMGMaxPercentageOverviewHeightInScreen);
-    [_overView setFrame:rect];
-    
-    [_tableView setFrame:viewRect];
-    
-    //Clear
-    _tableView.contentOffset = CGPointMake(0, 0);
-    _startContentOffset = _tableView.contentOffset;
-    _lastContentOffsetBlurEffect = _startContentOffset;
-}
-
-
-#pragma mark - Properties Methods
-
-- (void)setOverView:(UIView *)overView {
     static NSUInteger subviewTag = 100;
     UIView *subView = [overView viewWithTag:subviewTag];
     
@@ -109,34 +107,93 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
             [_overView removeConstraint:constraint];
         }
         
+        NSDictionary *views = NSDictionaryOfVariableBindings(overView);
+        
         overView.translatesAutoresizingMaskIntoConstraints = NO;
-        [_overView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[overView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(overView)]];
-        [_overView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[overView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(overView)]];
+        [_overView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[overView]-0-|" options:0 metrics:nil views:views]];
+        [_overView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[overView]-0-|" options:0 metrics:nil views:views]];
     }
 }
 
-- (void)setMainImage:(UIImage *)image {
+- (void)setMainImage:(UIImage *)image
+{
     image = [self mg_resizeImage:image];
     
     //Copying resized image & setting to blur
-    _image = [image copy];
+    image_ = [image copy];
     [_mainImageView setImageToBlur:image blurRadius:kLBBlurredImageDefaultBlurRadius completionBlock:nil];
 }
+
+
+#pragma mark - Public methods
+
+- (void)registerCellClass:(Class)cellClass forCellReuseIdentifier:(NSString *)identifier
+{
+    [_tableView registerClass:cellClass forCellReuseIdentifier:identifier];
+}
+
+
+#pragma mark - Private methods
+
+- (UIImage *)mg_resizeImage:(UIImage *)image
+{
+    UIGraphicsBeginImageContext(_mainImageView.frame.size);
+    [image drawInRect:_mainImageView.bounds];
+    
+    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return scaledImage;
+}
+
+- (void)mg_didRotateToSize:(CGSize)size
+{
+    [_mainImageView setFrame:CGRectMake(0, 0, size.width, size.width)];
+    
+    CGRect rect = _mainImageView.frame;
+    rect.size.height = MIN(rect.size.height, size.height*kMGMaxPercentageOverviewHeightInScreen);
+    [_overView setFrame:rect];
+    
+    [_tableView setFrame:(CGRect){ 0, 0, size.width, size.height }];
+    
+    //Clear
+    _tableView.contentOffset = (CGPoint){ 0, 0 };
+    startContentOffset_ = _tableView.contentOffset;
+    lastContentOffsetBlurEffect_ = startContentOffset_;
+}
+
+
+#pragma mark - Rotation
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+                                duration:(NSTimeInterval)duration
+{
+    [self mg_didRotateToSize:(CGSize){ CGRectGetHeight(self.view.bounds), CGRectGetWidth(self.view.bounds) }];
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size
+       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+    [self mg_didRotateToSize:size];
+}
+
 
 #pragma mark - UIScrollView Delegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if(scrollView.contentOffset.y <= _startContentOffset.y) {
+    if(scrollView.contentOffset.y <= startContentOffset_.y) {
         
         //Image size effects
         CGFloat absoluteY = ABS(scrollView.contentOffset.y);
-        CGFloat diff = _startContentOffset.y - scrollView.contentOffset.y;
+        CGFloat diff = startContentOffset_.y - scrollView.contentOffset.y;
+        CGFloat overviewWidth = CGRectGetWidth(_overView.frame);
+        CGFloat overviewHeight = CGRectGetHeight(_overView.frame);
         
-        [_mainImageView setFrame:CGRectMake(0.0-diff/2.0, 0.0, _overView.frame.size.width+absoluteY, _overView.frame.size.width+absoluteY)];
-        [_overView setFrame:CGRectMake(0.0, 0.0+absoluteY, _overView.frame.size.width, _overView.frame.size.height)];
+        _mainImageView.frame = (CGRect){ 0.0-diff/2.0, 0.0, overviewWidth+absoluteY, overviewWidth+absoluteY };
+        _overView.frame = (CGRect){ 0.0, 0.0+absoluteY, overviewWidth, overviewHeight };
         
-        if(scrollView.contentOffset.y < _startContentOffset.y-kMGOffsetEffects) {
+        if(scrollView.contentOffset.y < startContentOffset_.y-kMGOffsetEffects) {
             diff = kMGOffsetEffects;
         }
         
@@ -149,81 +206,89 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
         dispatch_async(dispatch_get_main_queue(), ^{
             
             //Blur effects
-            if(ABS(_lastContentOffsetBlurEffect.y-scrollView.contentOffset.y) >= kMGOffsetBlurEffect) {
-                _lastContentOffsetBlurEffect = scrollView.contentOffset;
-                [_mainImageView setImageToBlur:_image blurRadius:newBlur completionBlock:nil];
+            if(ABS(lastContentOffsetBlurEffect_.y-scrollView.contentOffset.y) >= kMGOffsetBlurEffect) {
+                lastContentOffsetBlurEffect_ = scrollView.contentOffset;
+                [_mainImageView setImageToBlur:image_ blurRadius:newBlur completionBlock:nil];
             }
             
             //Opacity overView
             CGFloat scale = 1.0/kMGOffsetEffects;
-            [overView setAlpha:1.0 - diff*scale];
+            overView.alpha = 1.0 - diff*scale;
         });
         
     }
 }
 
 
-#pragma mark - Private methods
+#pragma mark - UITableViewDataSource
 
-- (UIImage *)mg_resizeImage:(UIImage *)image
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    UIGraphicsBeginImageContext(_mainImageView.frame.size);
-    [image drawInRect:_mainImageView.bounds];
-    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
+    if ([self.dataSource respondsToSelector:@selector(numberOfSectionsInSpotyViewController:)]) {
+        return [self.dataSource numberOfSectionsInSpotyViewController:self] + 1;
+    }
     
-    return scaledImage;
+    return 2;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (section != 0) {
+        return [self.dataSource spotyViewController:self numberOfRowsInSection:section];
+    }
+    
+    return 0;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [self.dataSource spotyViewController:self cellForRowAtIndexPath:indexPath];
 }
 
 
-#pragma mark - UITableView Delegate & Datasource
+#pragma mark - UITableViewDelegate
 
-/* To override */
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([self.delegate respondsToSelector:@selector(spotyViewController:heightForRowAtIndexPath:)]) {
+        return [self.delegate spotyViewController:self heightForRowAtIndexPath:indexPath];
+    }
+    
+    return 44.0;
+}
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
     if(section == 0) {
-        UIView *transparentView = [[UIView alloc] initWithFrame:_overView.bounds];
+        UIView *transparentView = [[UIView alloc] initWithFrame:self.overView.bounds];
         [transparentView setBackgroundColor:[UIColor clearColor]];
         return transparentView;
+    } else if ([self.delegate respondsToSelector:@selector(spotyViewController:viewForHeaderInSection:)]) {
+        return [self.delegate spotyViewController:self viewForHeaderInSection:section];
     }
     
     return nil;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if(section == 0)
-        return _overView.frame.size.height;
-
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return CGRectGetHeight(self.overView.frame);
+    } else if (section != 0 && [self.delegate respondsToSelector:@selector(spotyViewController:heightForHeaderInSection:)]) {
+        return [self.delegate spotyViewController:self heightForHeaderInSection:section];
+    }
+    
     return 0.0;
 }
 
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if(section == 1)
-        return 20;
-    
-    return 0;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *identifier = @"CellID";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    
-    if(!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-        [cell setBackgroundColor:[UIColor darkGrayColor]];
-        [cell.textLabel setTextColor:[UIColor whiteColor]];
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if (section != 0 && [self.delegate respondsToSelector:@selector(spotyViewController:titleForHeaderInSection:)]) {
+        return [self.delegate spotyViewController:self titleForHeaderInSection:section];
     }
     
-    [cell.textLabel setText:@"Cell"];
-    
-    return cell;
+    return nil;
 }
-
 
 
 @end
