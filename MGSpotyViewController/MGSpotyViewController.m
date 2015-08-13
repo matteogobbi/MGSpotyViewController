@@ -63,6 +63,7 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
     CGFloat viewWidth = CGRectGetWidth(view.frame);
     _mainImageView.frame = (CGRect){ 0, 0, viewWidth, MIN(viewWidth, CGRectGetHeight(view.frame)*kMGMaxPercentageOverviewHeightInScreen) };
     _mainImageView.contentMode = UIViewContentModeScaleAspectFill;
+    _mainImageView.clipsToBounds = YES;
     [_mainImageView setImageToBlur:image_ blurRadius:kLBBlurredImageDefaultBlurRadius completionBlock:nil];
     [view addSubview:_mainImageView];
     
@@ -148,13 +149,15 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
 
 - (void)mg_didRotateToSize:(CGSize)size
 {
-    [_mainImageView setFrame:CGRectMake(0, 0, size.width, size.width)];
+    CGFloat newH = MIN(size.height*kMGMaxPercentageOverviewHeightInScreen, CGRectGetHeight(_overView.frame));
     
-    CGRect rect = _mainImageView.frame;
-    rect.size.height = MIN(rect.size.height, size.height*kMGMaxPercentageOverviewHeightInScreen);
-    [_overView setFrame:rect];
+    CGRect rect = _overView.frame;
+    rect.size.width = size.width;
+    rect.size.height = newH;
     
-    [_tableView setFrame:(CGRect){ 0, 0, size.width, size.height }];
+    _overView.frame = rect;
+    _mainImageView.frame = rect;
+    _tableView.frame = (CGRect){ 0, 0, size.width, size.height };
     
     //Clear
     _tableView.contentOffset = (CGPoint){ 0, 0 };
@@ -189,9 +192,11 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
         CGFloat diff = startContentOffset_.y - scrollView.contentOffset.y;
         CGFloat overviewWidth = CGRectGetWidth(_overView.frame);
         CGFloat overviewHeight = CGRectGetHeight(_overView.frame);
+        CGFloat newH = scrollView.contentOffset.y <= 0 ? overviewHeight + absoluteY : overviewHeight;
+        CGFloat newW = scrollView.contentOffset.y <= 0 ? (newH * overviewWidth) / newH : overviewWidth;
         
-        _mainImageView.frame = (CGRect){ 0.0-diff/2.0, 0.0, overviewWidth+absoluteY, overviewWidth+absoluteY };
-        _overView.frame = (CGRect){ 0.0, 0.0+absoluteY, overviewWidth, overviewHeight };
+        _mainImageView.frame = (CGRect){ 0.0, 0.0, newW, newH };
+        _overView.frame = (CGRect){ 0.0, absoluteY, overviewWidth, overviewHeight };
         
         if(scrollView.contentOffset.y < startContentOffset_.y-kMGOffsetEffects) {
             diff = kMGOffsetEffects;
@@ -215,7 +220,6 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
             CGFloat scale = 1.0/kMGOffsetEffects;
             overView.alpha = 1.0 - diff*scale;
         });
-        
     }
 }
 
