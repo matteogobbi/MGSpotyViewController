@@ -138,13 +138,27 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.67f;
 
 - (UIImage *)mg_resizeImage:(UIImage *)image
 {
+    CGSize sizeBeingScaledTo = [self mg_sizeAspectFill:_mainImageView.frame.size aspectRatio:image.size];
+    
     UIGraphicsBeginImageContext(_mainImageView.frame.size);
-    [image drawInRect:_mainImageView.bounds];
+    [image drawInRect:(CGRect){ 0, 0, sizeBeingScaledTo.width, sizeBeingScaledTo.height }];
     
     UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
     return scaledImage;
+}
+
+- (CGSize)mg_sizeAspectFill:(CGSize)minimumSize aspectRatio:(CGSize)aspectRatio
+{
+    CGFloat mW = minimumSize.width / aspectRatio.width;
+    CGFloat mH = minimumSize.height / aspectRatio.height;
+    if(mH > mW) {
+        minimumSize.width = minimumSize.height / aspectRatio.height * aspectRatio.width;
+    } else if( mW > mH ) {
+        minimumSize.height = minimumSize.width / aspectRatio.width * aspectRatio.height;
+    }
+    return minimumSize;
 }
 
 - (void)mg_didRotateToSize:(CGSize)size
