@@ -39,6 +39,9 @@
     self.dataSource = dataSource_;
     self.delegate = delegate_;
     
+    self.overView.frame = (CGRect){ self.overView.frame.origin.x, self.overView.frame.origin.y, CGRectGetWidth(self.view.frame), CGRectGetWidth(self.view.frame) };
+    self.mainImageView.frame = self.overView.frame;
+    
     [self setOverView:self.myOverView];
 }
 

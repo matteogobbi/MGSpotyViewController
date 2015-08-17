@@ -1,13 +1,13 @@
 Pod::Spec.new do |s|
   s.name         = 'MGSpotyViewController'
-  s.version      = '0.2'
+  s.version      = '0.2.1'
   s.summary      = 'Beautiful viewController with a tableView and amazing effects like a viewController in the Spotify app.'
   s.homepage     = 'https://github.com/matteogobbi/MGSpotyViewController'
   s.license      = { :type => 'MIT',
                      :file => 'LICENSE' }
   s.author       = { 'Matteo Gobbi' => 'job@matteogobbi.com' }
   s.source       = { :git => 'https://github.com/matteogobbi/MGSpotyViewController.git',
-                     :tag => '0.2' }
+                     :tag => '0.2.1' }
   s.platform     = :ios, '6.0'
   s.source_files = 'MGSpotyViewController/*.{h,m}', 'MGSpotyViewController/ImageEffects/*.{h,m}'
   s.frameworks   = 'CoreGraphics', 'UIKit'
