@@ -11,7 +11,7 @@
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>5F3956F5A6E4A82D8B988DA63165CE2620B2401E</key>
-		<string>github.com:danielebogo/MGSpotyViewController.git</string>
+		<string>https://github.com/matteogobbi/MGSpotyViewController.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>MGSpotyView.xcodeproj</string>
@@ -21,7 +21,7 @@
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>github.com:danielebogo/MGSpotyViewController.git</string>
+	<string>https://github.com/matteogobbi/MGSpotyViewController.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
@@ -34,7 +34,7 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>5F3956F5A6E4A82D8B988DA63165CE2620B2401E</string>
 			<key>IDESourceControlWCCName</key>
-			<string>MGSpotyViewController</string>
+			<string>MGSpotyView</string>
 		</dict>
 	</array>
 </dict>
