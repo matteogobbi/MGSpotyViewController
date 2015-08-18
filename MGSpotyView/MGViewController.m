@@ -62,48 +62,20 @@
 - (void)mg_addElementOnView:(UIView *)view
 {
     //Add an example imageView
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+    UIView *itemsContainer = [UIView new];
+    itemsContainer.translatesAutoresizingMaskIntoConstraints = NO;
+    [view addSubview:itemsContainer];
+    
+    UIImageView *imageView = [UIImageView new];
     imageView.translatesAutoresizingMaskIntoConstraints = NO;
-    [view addSubview:imageView];
-    [view addConstraint:[NSLayoutConstraint constraintWithItem:imageView
-                                                     attribute:NSLayoutAttributeCenterX
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:view
-                                                     attribute:NSLayoutAttributeCenterX
-                                                    multiplier:1
-                                                      constant:0]];
-    
-    [view addConstraint:[NSLayoutConstraint constraintWithItem:imageView
-                                                     attribute:NSLayoutAttributeCenterY
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:view
-                                                     attribute:NSLayoutAttributeCenterY
-                                                    multiplier:1
-                                                      constant:0]];
-    
-    [imageView addConstraint:[NSLayoutConstraint constraintWithItem:imageView
-                                                          attribute:NSLayoutAttributeHeight
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:nil
-                                                          attribute:NSLayoutAttributeNotAnAttribute
-                                                         multiplier:1
-                                                           constant:100.0]];
-    
-    [imageView addConstraint:[NSLayoutConstraint constraintWithItem:imageView
-                                                          attribute:NSLayoutAttributeWidth
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:nil
-                                                          attribute:NSLayoutAttributeNotAnAttribute
-                                                         multiplier:1
-                                                           constant:100.0]];
-    
     [imageView setContentMode:UIViewContentModeScaleAspectFill];
     [imageView setClipsToBounds:YES];
     [imageView setImage:[UIImage imageNamed:@"example"]];
     [imageView.layer setBorderColor:[UIColor whiteColor].CGColor];
     [imageView.layer setBorderWidth:2.0];
-    [imageView.layer setCornerRadius:50.0];
+    [imageView.layer setCornerRadius:45.0];
     imageView.userInteractionEnabled = YES;
+    [itemsContainer addSubview:imageView];
     
     UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     tapRecognizer.numberOfTapsRequired = 1;
@@ -111,90 +83,40 @@
     
     
     //Add an example label
-    UILabel *lblTitle = [[UILabel alloc] initWithFrame:CGRectZero];
+    UILabel *lblTitle = [UILabel new];
     lblTitle.translatesAutoresizingMaskIntoConstraints = NO;
-    [view addSubview:lblTitle];
-    
-    [view addConstraint:[NSLayoutConstraint constraintWithItem:lblTitle
-                                                     attribute:NSLayoutAttributeCenterX
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:view
-                                                     attribute:NSLayoutAttributeCenterX
-                                                    multiplier:1
-                                                      constant:0]];
-    
-    [view addConstraint:[NSLayoutConstraint constraintWithItem:lblTitle
-                                                     attribute:NSLayoutAttributeTop
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:imageView
-                                                     attribute:NSLayoutAttributeBottom
-                                                    multiplier:1
-                                                      constant:10.0]];
-    
-    [lblTitle addConstraint:[NSLayoutConstraint constraintWithItem:lblTitle
-                                                         attribute:NSLayoutAttributeHeight
-                                                         relatedBy:NSLayoutRelationEqual
-                                                            toItem:nil
-                                                         attribute:NSLayoutAttributeNotAnAttribute
-                                                        multiplier:1
-                                                          constant:30.0]];
-    
-    [lblTitle addConstraint:[NSLayoutConstraint constraintWithItem:lblTitle
-                                                         attribute:NSLayoutAttributeWidth
-                                                         relatedBy:NSLayoutRelationGreaterThanOrEqual
-                                                            toItem:nil
-                                                         attribute:NSLayoutAttributeNotAnAttribute
-                                                        multiplier:1
-                                                          constant:240.0]];
-    
     [lblTitle setText:@"Name Surname"];
     [lblTitle setFont:[UIFont boldSystemFontOfSize:25.0]];
     [lblTitle setTextAlignment:NSTextAlignmentCenter];
     [lblTitle setTextColor:[UIColor whiteColor]];
+    lblTitle.numberOfLines = 0;
+    lblTitle.lineBreakMode = NSLineBreakByWordWrapping;
+    [itemsContainer addSubview:lblTitle];
     
     
     //Add an example button
-    UIButton *btContact = [[UIButton alloc] initWithFrame:CGRectZero];
+    UIButton *btContact = [UIButton buttonWithType:UIButtonTypeCustom];
     btContact.translatesAutoresizingMaskIntoConstraints = NO;
-    [view addSubview:btContact];
-    
-    [view addConstraint:[NSLayoutConstraint constraintWithItem:btContact
-                                                     attribute:NSLayoutAttributeCenterX
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:view
-                                                     attribute:NSLayoutAttributeCenterX
-                                                    multiplier:1
-                                                      constant:0]];
-    
-    [view addConstraint:[NSLayoutConstraint constraintWithItem:btContact
-                                                     attribute:NSLayoutAttributeTop
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:lblTitle
-                                                     attribute:NSLayoutAttributeBottom
-                                                    multiplier:1
-                                                      constant:10.0]];
-    
-    [btContact addConstraint:[NSLayoutConstraint constraintWithItem:btContact
-                                                          attribute:NSLayoutAttributeHeight
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:nil
-                                                          attribute:NSLayoutAttributeNotAnAttribute
-                                                         multiplier:1
-                                                           constant:35.0]];
-    
-    [btContact addConstraint:[NSLayoutConstraint constraintWithItem:btContact
-                                                          attribute:NSLayoutAttributeWidth
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:nil
-                                                          attribute:NSLayoutAttributeNotAnAttribute
-                                                         multiplier:1
-                                                           constant:70.0]];
-    
     [btContact setTitle:@"Contact" forState:UIControlStateNormal];
     [btContact addTarget:self action:@selector(actionContact:) forControlEvents:UIControlEventTouchUpInside];
     btContact.backgroundColor = [UIColor darkGrayColor];
     btContact.titleLabel.font = [UIFont fontWithName:@"Verdana" size:12.0];
     btContact.layer.cornerRadius = 5.0;
+    [itemsContainer addSubview:btContact];
+    
+    [view addConstraint:[NSLayoutConstraint constraintWithItem:itemsContainer attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
+    [view addConstraint:[NSLayoutConstraint constraintWithItem:itemsContainer attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
+    
+    NSDictionary *items = NSDictionaryOfVariableBindings(imageView, lblTitle, btContact);
+    [items enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        [itemsContainer addConstraint:[NSLayoutConstraint constraintWithItem:obj attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:itemsContainer attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
+    }];
+    
+    [itemsContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[imageView(90)]" options:0 metrics:nil views:items]];
+    [itemsContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[btContact(70)]" options:0 metrics:nil views:items]];
+    [itemsContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[lblTitle]-10-|" options:0 metrics:nil views:items]];
+    
+    [itemsContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[imageView(90)]-10-[lblTitle]-10-[btContact(30)]|" options:0 metrics:nil views:items]];
 }
 
 
