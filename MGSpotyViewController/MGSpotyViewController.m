@@ -118,8 +118,8 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
 
 - (void)setMainImage:(UIImage *)image
 {
-    BOOL imageToResize = CGRectContainsRect(_mainImageView.bounds, (CGRect){ 0, 0, image.size.width, image.size.height });
-    if (imageToResize) {
+    BOOL imageIsContained = CGRectContainsRect(_mainImageView.bounds, (CGRect){ 0, 0, image.size.width, image.size.height });
+    if (!imageIsContained) {
         image = [self mg_resizeImage:image];
     }
     
