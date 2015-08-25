@@ -118,7 +118,10 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
 
 - (void)setMainImage:(UIImage *)image
 {
-    image = [self mg_resizeImage:image];
+    BOOL imageIsContained = CGRectContainsRect(_mainImageView.bounds, (CGRect){ 0, 0, image.size.width, image.size.height });
+    if (!imageIsContained) {
+        image = [self mg_resizeImage:image];
+    }
     
     //Copying resized image & setting to blur
     image_ = [image copy];
