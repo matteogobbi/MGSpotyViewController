@@ -44,6 +44,20 @@ MGViewController *spotyViewController = [[MGViewController alloc] initWithMainIm
 @end
 ```
 
+Set the `delegate` and the `datasource` of the `MGSpotyViewController`:
+
+```objective-c
+- (instancetype)init
+{
+    if (self = [super init]) {
+        self.dataSource = myDataSource; //Or self
+        self.delegate = myDelegate; //Or self
+    }
+    
+    return self;
+}
+```
+
 In the implementation file, first of all you should set the `overView`. The `overView` is basically <b>the header view which remains over the blur image</b>:
 
 ``` objective-c
