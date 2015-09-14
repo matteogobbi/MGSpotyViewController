@@ -28,6 +28,7 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
     CGPoint lastContentOffsetBlurEffect_;
     UIImage *image_;
     NSOperationQueue *operationQueue_;
+    MGSpotyViewTableScrollingType scrollingType_;
 }
 
 
@@ -35,8 +36,14 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
 
 - (instancetype)initWithMainImage:(UIImage *)image
 {
+    return [self initWithMainImage:image tableScrollingType:MGSpotyViewTableScrollingTypeOver];
+}
+
+- (instancetype)initWithMainImage:(UIImage *)image tableScrollingType:(MGSpotyViewTableScrollingType)scrollingType
+{
     if(self = [super init]) {
         image_ = [image copy];
+        scrollingType_ = scrollingType;
         
         _mainImageView = [UIImageView new];
         _mainImageView.image = image_;
