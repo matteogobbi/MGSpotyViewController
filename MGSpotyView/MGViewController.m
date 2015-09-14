@@ -24,7 +24,7 @@
 
 - (instancetype)initWithMainImage:(UIImage *)image
 {
-    self = [super initWithMainImage:image];
+    self = [super initWithMainImage:image tableScrollingType:MGSpotyViewTableScrollingTypeNormal]; //or MGSpotyViewTableScrollingTypeOver
     if (self) {
         dataSource_ = [MGViewControllerDataSource new];
         delegate_ = [MGViewControllerDelegate new];

@@ -209,18 +209,19 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    //Image size effects
+    CGFloat absoluteY = ABS(scrollView.contentOffset.y);
+    CGFloat overviewWidth = CGRectGetWidth(_overView.frame);
+    CGFloat overviewHeight = CGRectGetHeight(_overView.frame);
+    
     if(scrollView.contentOffset.y <= startContentOffset_.y) {
+        _overView.frame = (CGRect){ 0.0, absoluteY, overviewWidth, overviewHeight };
         
-        //Image size effects
-        CGFloat absoluteY = ABS(scrollView.contentOffset.y);
         CGFloat diff = startContentOffset_.y - scrollView.contentOffset.y;
-        CGFloat overviewWidth = CGRectGetWidth(_overView.frame);
-        CGFloat overviewHeight = CGRectGetHeight(_overView.frame);
         CGFloat newH = scrollView.contentOffset.y <= 0 ? overviewHeight + absoluteY : overviewHeight;
         CGFloat newW = scrollView.contentOffset.y <= 0 ? (newH * overviewWidth) / newH : overviewWidth;
         
         _mainImageView.frame = (CGRect){ 0.0, 0.0, newW, newH };
-        _overView.frame = (CGRect){ 0.0, absoluteY, overviewWidth, overviewHeight };
         
         if(scrollView.contentOffset.y < startContentOffset_.y-kMGOffsetEffects) {
             diff = kMGOffsetEffects;
@@ -244,6 +245,8 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
             CGFloat scale = 1.0/kMGOffsetEffects;
             overView.alpha = 1.0 - diff*scale;
         });
+    } else if (scrollingType_ == MGSpotyViewTableScrollingTypeNormal) {
+        _overView.frame = (CGRect){ 0.0, -absoluteY, overviewWidth, overviewHeight };
     }
 }
 
