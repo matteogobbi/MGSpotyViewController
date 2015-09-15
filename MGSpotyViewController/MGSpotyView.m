@@ -12,10 +12,13 @@
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
-    CGRect rect = {_overview.frame.origin, {_overview.frame.size.width, _overview.frame.size.height-_tableView.contentOffset.y}};
+    CGFloat offsetY = _overview.frame.origin.y + _tableView.contentOffset.y;
+    
+    CGRect rect = {_overview.frame.origin, {_overview.frame.size.width, _overview.frame.size.height-offsetY}};
     
     if (CGRectContainsPoint(rect, point)) {
-        return [_overview hitTest:point withEvent:event];;
+        CGPoint convertedPoint = [_overview convertPoint:point fromView:self];
+        return [_overview hitTest:convertedPoint withEvent:event];;
     }
     
     return [super hitTest:point withEvent:event];
