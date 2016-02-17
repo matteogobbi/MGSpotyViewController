@@ -23,11 +23,6 @@ typedef NS_ENUM(NSUInteger, MGSpotyViewTableScrollingType) {
 @interface MGSpotyViewController : UIViewController
 
 /**
- *  Main TableView object
- */
-@property (nonatomic, strong) UITableView *tableView;
-
-/**
  *  Overview object
  */
 @property (nonatomic, strong) UIView *overView;

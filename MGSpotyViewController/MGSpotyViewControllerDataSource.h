@@ -15,8 +15,10 @@
 @required
 - (NSInteger)spotyViewController:(MGSpotyViewController *)spotyViewController
            numberOfRowsInSection:(NSInteger)section;
+
 - (UITableViewCell *)spotyViewController:(MGSpotyViewController *)spotyViewController
-         cellForRowAtIndexPath:(NSIndexPath *)indexPath;
+                               tableView:(UITableView *)tableView
+                   cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 
 @optional
 - (NSInteger)numberOfSectionsInSpotyViewController:(MGSpotyViewController *)spotyViewController;

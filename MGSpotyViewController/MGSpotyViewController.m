@@ -20,6 +20,11 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
 
 @interface MGSpotyViewController () <UITableViewDelegate, UITableViewDataSource>
 
+/**
+ *  Main TableView object
+ */
+@property (nonatomic, strong) UITableView *tableView;
+
 @end
 
 
@@ -257,6 +262,10 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
             });
         }
     }
+    
+    if ([self.delegate respondsToSelector:@selector(spotyViewController:scrollViewDidScroll:)]) {
+        [self.delegate spotyViewController:self scrollViewDidScroll:scrollView];
+    }
 }
 
 
@@ -282,7 +291,7 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [self.dataSource spotyViewController:self cellForRowAtIndexPath:indexPath];
+    return [self.dataSource spotyViewController:self tableView:tableView cellForRowAtIndexPath:indexPath];
 }
 
 
