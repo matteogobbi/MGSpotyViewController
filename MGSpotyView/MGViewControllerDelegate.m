@@ -38,4 +38,15 @@
     NSLog(@"%1.2f", scrollView.contentOffset.y);
 }
 
+- (void)spotyViewController:(MGSpotyViewController *)spotyViewController didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"selected row");
+    [spotyViewController.tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (void)spotyViewController:(MGSpotyViewController *)spotyViewController didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"deselected row");
+}
+
 @end

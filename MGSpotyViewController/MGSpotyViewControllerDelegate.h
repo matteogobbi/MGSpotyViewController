@@ -13,19 +13,26 @@
 @protocol MGSpotyViewControllerDelegate <NSObject>
 
 @optional
-- (CGFloat)spotyViewController:(MGSpotyViewController *)spotyViewController
-    heightForRowAtIndexPath:(NSIndexPath *)indexPath;
+- (CGFloat)spotyViewController:(nonnull MGSpotyViewController *)spotyViewController
+    heightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath;
 
-- (UIView *)spotyViewController:(MGSpotyViewController *)spotyViewController
+- (nullable UIView *)spotyViewController:(nonnull MGSpotyViewController *)spotyViewController
          viewForHeaderInSection:(NSInteger)section;
 
-- (CGFloat)spotyViewController:(MGSpotyViewController *)spotyViewController
+- (CGFloat)spotyViewController:(nonnull MGSpotyViewController *)spotyViewController
       heightForHeaderInSection:(NSInteger)section;
 
-- (NSString *)spotyViewController:(MGSpotyViewController *)spotyViewController
+- (nonnull NSString *)spotyViewController:(nonnull MGSpotyViewController *)spotyViewController
           titleForHeaderInSection:(NSInteger)section;
 
-- (void)spotyViewController:(MGSpotyViewController *)spotyViewController
-              scrollViewDidScroll:(UIScrollView *)scrollView;
+- (void)spotyViewController:(nonnull MGSpotyViewController *)spotyViewController
+              scrollViewDidScroll:(nonnull UIScrollView *)scrollView;
+
+- (void)spotyViewController:(nonnull MGSpotyViewController *)spotyViewController
+  didDeselectRowAtIndexPath:(nonnull NSIndexPath *)indexPath;
+
+- (void)spotyViewController:(nonnull MGSpotyViewController *)spotyViewController
+    didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath;
+
 
 @end

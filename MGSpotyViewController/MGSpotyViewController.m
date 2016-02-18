@@ -344,5 +344,23 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
     return nil;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath
+{
+    if (indexPath.section == 1) {
+        if ([self.delegate respondsToSelector:@selector(spotyViewController:didSelectRowAtIndexPath:)]) {
+            [self.delegate spotyViewController:self didSelectRowAtIndexPath:indexPath];
+        }
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 1) {
+        if ([self.delegate respondsToSelector:@selector(spotyViewController:didDeselectRowAtIndexPath:)]) {
+            [self.delegate spotyViewController:self didDeselectRowAtIndexPath:indexPath];
+        }
+    }
+}
+
 
 @end
