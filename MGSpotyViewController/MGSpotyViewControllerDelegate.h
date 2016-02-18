@@ -25,7 +25,7 @@
 - (NSString *)spotyViewController:(MGSpotyViewController *)spotyViewController
           titleForHeaderInSection:(NSInteger)section;
 
-- (NSString *)spotyViewController:(MGSpotyViewController *)spotyViewController
+- (void)spotyViewController:(MGSpotyViewController *)spotyViewController
               scrollViewDidScroll:(UIScrollView *)scrollView;
 
 @end
