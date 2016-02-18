@@ -23,11 +23,6 @@ typedef NS_ENUM(NSUInteger, MGSpotyViewTableScrollingType) {
 @interface MGSpotyViewController : UIViewController
 
 /**
- *  Main TableView object
- */
-@property (nonatomic, strong) UITableView *tableView;
-
-/**
  *  Overview object
  */
 @property (nonatomic, strong) UIView *overView;
@@ -36,6 +31,12 @@ typedef NS_ENUM(NSUInteger, MGSpotyViewTableScrollingType) {
  *  Main image view
  */
 @property (nonatomic, strong) UIImageView *mainImageView;
+
+/**
+ *  Indicate if the overView has to fade out when scrolling up
+ *  Default value: NO
+ */
+@property (nonatomic) BOOL overViewFadeOut;
 
 /**
  *  The MGSpotyViewController dataSource. This protocol wraps the tableview datasource

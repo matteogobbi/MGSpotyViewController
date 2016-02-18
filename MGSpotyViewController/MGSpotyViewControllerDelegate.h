@@ -15,11 +15,17 @@
 @optional
 - (CGFloat)spotyViewController:(MGSpotyViewController *)spotyViewController
     heightForRowAtIndexPath:(NSIndexPath *)indexPath;
+
 - (UIView *)spotyViewController:(MGSpotyViewController *)spotyViewController
          viewForHeaderInSection:(NSInteger)section;
+
 - (CGFloat)spotyViewController:(MGSpotyViewController *)spotyViewController
       heightForHeaderInSection:(NSInteger)section;
+
 - (NSString *)spotyViewController:(MGSpotyViewController *)spotyViewController
           titleForHeaderInSection:(NSInteger)section;
+
+- (void)spotyViewController:(MGSpotyViewController *)spotyViewController
+              scrollViewDidScroll:(UIScrollView *)scrollView;
 
 @end

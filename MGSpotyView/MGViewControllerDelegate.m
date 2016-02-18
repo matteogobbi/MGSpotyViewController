@@ -33,5 +33,9 @@
     return @"My Section";
 }
 
+- (void)spotyViewController:(MGSpotyViewController *)spotyViewController scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    NSLog(@"%1.2f", scrollView.contentOffset.y);
+}
 
 @end

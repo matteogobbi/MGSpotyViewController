@@ -20,6 +20,11 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
 
 @interface MGSpotyViewController () <UITableViewDelegate, UITableViewDataSource>
 
+/**
+ *  Main TableView object
+ */
+@property (nonatomic, strong) UITableView *tableView;
+
 @end
 
 
@@ -109,6 +114,7 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
     
     if(![subView isEqual:overView]) {
         [subView removeFromSuperview];
+        _overView.frame = overView.frame;
         [_overView addSubview:overView];
         
         for (NSLayoutConstraint *constraint in _overView.constraints) {
@@ -214,6 +220,8 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
     CGFloat overviewWidth = CGRectGetWidth(_overView.frame);
     CGFloat overviewHeight = CGRectGetHeight(_overView.frame);
     
+    __block typeof (_overView) overView = _overView;
+    
     if(scrollView.contentOffset.y <= startContentOffset_.y) {
         _overView.frame = (CGRect){ 0.0, absoluteY, overviewWidth, overviewHeight };
         
@@ -231,8 +239,6 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
         CGFloat scale = kLBBlurredImageDefaultBlurRadius/kMGOffsetEffects;
         CGFloat newBlur = kLBBlurredImageDefaultBlurRadius - diff*scale;
         
-        __block typeof (_overView) overView = _overView;
-        
         dispatch_async(dispatch_get_main_queue(), ^{
             
             //Blur effects
@@ -247,6 +253,19 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
         });
     } else if (scrollingType_ == MGSpotyViewTableScrollingTypeNormal) {
         _overView.frame = (CGRect){ 0.0, -absoluteY, overviewWidth, overviewHeight };
+        
+        if (_overViewFadeOut) {
+            CGFloat diff = startContentOffset_.y + scrollView.contentOffset.y;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //Opacity overView
+                CGFloat scale = 1.0/(overView.frame.size.height/2.0);
+                overView.alpha = 1.0 - diff*scale;
+            });
+        }
+    }
+    
+    if ([self.delegate respondsToSelector:@selector(spotyViewController:scrollViewDidScroll:)]) {
+        [self.delegate spotyViewController:self scrollViewDidScroll:scrollView];
     }
 }
 
@@ -273,7 +292,7 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [self.dataSource spotyViewController:self cellForRowAtIndexPath:indexPath];
+    return [self.dataSource spotyViewController:self tableView:tableView cellForRowAtIndexPath:indexPath];
 }
 
 

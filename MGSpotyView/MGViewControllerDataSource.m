@@ -22,10 +22,11 @@
 }
 
 - (UITableViewCell *)spotyViewController:(MGSpotyViewController *)spotyViewController
+                               tableView:(UITableView *)tableView
                    cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *identifier = @"CellID";
-    UITableViewCell *cell = [spotyViewController.tableView dequeueReusableCellWithIdentifier:identifier];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     
     if(!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];

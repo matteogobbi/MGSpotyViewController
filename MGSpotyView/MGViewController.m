@@ -28,6 +28,8 @@
     if (self) {
         dataSource_ = [MGViewControllerDataSource new];
         delegate_ = [MGViewControllerDelegate new];
+        
+        self.overViewFadeOut = YES;
     }
     return self;
 }
@@ -44,7 +46,7 @@
 
 - (UIView *)myOverView
 {
-    UIView *view = [[UIView alloc] initWithFrame:self.overView.bounds];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.overView.frame.size.width, 250)];
     
     [self mg_addElementOnView:view];
     
