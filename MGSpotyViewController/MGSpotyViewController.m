@@ -57,6 +57,8 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
         
         _tableView = [UITableView new];
         
+        _shouldUnblur = YES;
+        
         operationQueue_ = [[NSOperationQueue alloc]init];
         operationQueue_.maxConcurrentOperationCount = 1;
     }
@@ -242,9 +244,11 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
         dispatch_async(dispatch_get_main_queue(), ^{
             
             //Blur effects
-            if(ABS(lastContentOffsetBlurEffect_.y-scrollView.contentOffset.y) >= kMGOffsetBlurEffect) {
-                lastContentOffsetBlurEffect_ = scrollView.contentOffset;
-                [_mainImageView setImageToBlur:image_ blurRadius:newBlur completionBlock:nil];
+            if (_shouldUnblur) {
+                if(ABS(lastContentOffsetBlurEffect_.y-scrollView.contentOffset.y) >= kMGOffsetBlurEffect) {
+                    lastContentOffsetBlurEffect_ = scrollView.contentOffset;
+                    [_mainImageView setImageToBlur:image_ blurRadius:newBlur completionBlock:nil];
+                }
             }
             
             //Opacity overView

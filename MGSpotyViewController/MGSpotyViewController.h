@@ -41,7 +41,13 @@ typedef NS_ENUM(NSUInteger, MGSpotyViewTableScrollingType) {
  *  Indicate if the overView has to fade out when scrolling up
  *  Default value: NO
  */
-@property (nonatomic) BOOL overViewFadeOut;
+@property (atomic) BOOL overViewFadeOut;
+
+/**
+ *  Indicate if the main image has to get unblurred when scrolling down
+ *  Default value: YES
+ */
+@property (atomic) BOOL shouldUnblur;
 
 /**
  *  The MGSpotyViewController dataSource. This protocol wraps the tableview datasource
