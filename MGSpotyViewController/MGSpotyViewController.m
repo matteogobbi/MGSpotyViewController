@@ -114,6 +114,7 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
     
     if(![subView isEqual:overView]) {
         [subView removeFromSuperview];
+        _overView.frame = overView.frame;
         [_overView addSubview:overView];
         
         for (NSLayoutConstraint *constraint in _overView.constraints) {
