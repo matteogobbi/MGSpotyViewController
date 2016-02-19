@@ -30,6 +30,8 @@
         delegate_ = [MGViewControllerDelegate new];
         
         self.overViewFadeOut = YES;
+        
+        self.blurRadius = 8.f;
     }
     return self;
 }
