@@ -34,7 +34,7 @@ CGFloat kLBBlurredImageDefaultBlurRadius                  = 20.0;
 
 - (void)setImageToBlur:(UIImage *)image
             blurRadius:(CGFloat)blurRadius
-             tintColor:(nullable UIColor *)tintColor
+             tintColor:(UIColor *)tintColor
        completionBlock:(LBBlurredImageCompletionBlock)completion
 {
     NSParameterAssert(image);
