@@ -9,8 +9,8 @@
 #import "UIImageView+LBBlurredImage.h"
 #import "UIImage+ImageEffects.h"
 
-CGFloat const kLBBlurredImageDefaultBlurRadius            = 20.0;
 CGFloat const kLBBlurredImageDefaultSaturationDeltaFactor = 1.0;
+CGFloat kLBBlurredImageDefaultBlurRadius                  = 20.0;
 
 
 @implementation UIImageView (LBBlurredImage)
@@ -27,15 +27,23 @@ CGFloat const kLBBlurredImageDefaultSaturationDeltaFactor = 1.0;
 
 - (void)setImageToBlur:(UIImage *)image
             blurRadius:(CGFloat)blurRadius
-       completionBlock:(LBBlurredImageCompletionBlock) completion
+       completionBlock:(LBBlurredImageCompletionBlock)completion
+{
+    [self setImageToBlur:image blurRadius:blurRadius tintColor:nil completionBlock:completion];
+}
+
+- (void)setImageToBlur:(UIImage *)image
+            blurRadius:(CGFloat)blurRadius
+             tintColor:(nullable UIColor *)tintColor
+       completionBlock:(LBBlurredImageCompletionBlock)completion
 {
     NSParameterAssert(image);
     NSParameterAssert(blurRadius >= 0);
-    
+
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         UIImage *blurredImage = [image applyBlurWithRadius:blurRadius
-                                                 tintColor:nil
+                                                 tintColor:tintColor
                                      saturationDeltaFactor:kLBBlurredImageDefaultSaturationDeltaFactor
                                                  maskImage:nil];
         

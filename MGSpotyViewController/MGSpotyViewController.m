@@ -143,6 +143,16 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
     [_mainImageView setImageToBlur:image blurRadius:kLBBlurredImageDefaultBlurRadius completionBlock:nil];
 }
 
+- (void)setBlurRadius:(CGFloat)blurRadius
+{
+    kLBBlurredImageDefaultBlurRadius = blurRadius;
+}
+
+- (CGFloat)blurRadius
+{
+    return kLBBlurredImageDefaultBlurRadius;
+}
+
 
 #pragma mark - Public methods
 
