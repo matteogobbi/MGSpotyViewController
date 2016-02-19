@@ -50,6 +50,12 @@ typedef NS_ENUM(NSUInteger, MGSpotyViewTableScrollingType) {
 @property (atomic) BOOL shouldUnblur;
 
 /**
+ *  Set the value of the blur radius.
+ *  Default value: 20.0
+ */
+@property (nonatomic) CGFloat blurRadius;
+
+/**
  *  The MGSpotyViewController dataSource. This protocol wraps the tableview datasource
  */
 @property (nonatomic, weak) id <MGSpotyViewControllerDataSource> dataSource;
