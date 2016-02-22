@@ -129,6 +129,8 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
         [_overView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[overView]-0-|" options:0 metrics:nil views:views]];
         [_overView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[overView]-0-|" options:0 metrics:nil views:views]];
     }
+    
+    [self bsu_applyEffectsConsideringScrollViewContentOffset:_tableView.contentOffset];
 }
 
 - (void)setMainImage:(UIImage *)image
@@ -140,7 +142,8 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
     
     //Copying resized image & setting to blur
     image_ = [image copy];
-    [_mainImageView setImageToBlur:image blurRadius:kLBBlurredImageDefaultBlurRadius tintColor:_tintColor completionBlock:nil];
+    
+    [self bsu_applyEffectsConsideringScrollViewContentOffset:_tableView.contentOffset];
 }
 
 - (void)setBlurRadius:(CGFloat)blurRadius
@@ -207,6 +210,60 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
     lastContentOffsetBlurEffect_ = startContentOffset_;
 }
 
+- (void)bsu_applyEffectsConsideringScrollViewContentOffset:(CGPoint)contentOffset
+{
+    //Image size effects
+    CGFloat absoluteY = ABS(contentOffset.y);
+    CGFloat overviewWidth = CGRectGetWidth(_overView.frame);
+    CGFloat overviewHeight = CGRectGetHeight(_overView.frame);
+    
+    __block typeof (_overView) overView = _overView;
+    
+    if(contentOffset.y <= startContentOffset_.y) {
+        _overView.frame = (CGRect){ 0.0, absoluteY, overviewWidth, overviewHeight };
+                
+        CGFloat diff = startContentOffset_.y - contentOffset.y;
+        CGFloat newH = contentOffset.y <= 0 ? overviewHeight + absoluteY : overviewHeight;
+        CGFloat newW = contentOffset.y <= 0 ? (newH * overviewWidth) / newH : overviewWidth;
+        
+        _mainImageView.frame = (CGRect){ 0.0, 0.0, newW, newH };
+        
+        if(contentOffset.y < startContentOffset_.y-kMGOffsetEffects) {
+            diff = kMGOffsetEffects;
+        }
+        
+        //Image blur effects
+        CGFloat scale = kLBBlurredImageDefaultBlurRadius/kMGOffsetEffects;
+        CGFloat newBlur = kLBBlurredImageDefaultBlurRadius - diff*scale;
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            //Blur effects
+            if (_shouldUnblur) {
+                if(ABS(lastContentOffsetBlurEffect_.y-contentOffset.y) >= kMGOffsetBlurEffect) {
+                    lastContentOffsetBlurEffect_ = contentOffset;
+                    [_mainImageView setImageToBlur:image_ blurRadius:newBlur tintColor:_tintColor completionBlock:nil];
+                }
+            }
+            
+            //Opacity overView
+            CGFloat scale = 1.0/kMGOffsetEffects;
+            overView.alpha = 1.0 - diff*scale;
+        });
+    } else if (scrollingType_ == MGSpotyViewTableScrollingTypeNormal) {
+        _overView.frame = (CGRect){ 0.0, -absoluteY, overviewWidth, overviewHeight };
+        
+        if (_overViewFadeOut) {
+            CGFloat diff = startContentOffset_.y + contentOffset.y;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //Opacity overView
+                CGFloat scale = 1.0/(overView.frame.size.height/2.0);
+                overView.alpha = 1.0 - diff*scale;
+            });
+        }
+    }
+}
+
 
 #pragma mark - Rotation
 
@@ -227,56 +284,7 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    //Image size effects
-    CGFloat absoluteY = ABS(scrollView.contentOffset.y);
-    CGFloat overviewWidth = CGRectGetWidth(_overView.frame);
-    CGFloat overviewHeight = CGRectGetHeight(_overView.frame);
-    
-    __block typeof (_overView) overView = _overView;
-    
-    if(scrollView.contentOffset.y <= startContentOffset_.y) {
-        _overView.frame = (CGRect){ 0.0, absoluteY, overviewWidth, overviewHeight };
-        
-        CGFloat diff = startContentOffset_.y - scrollView.contentOffset.y;
-        CGFloat newH = scrollView.contentOffset.y <= 0 ? overviewHeight + absoluteY : overviewHeight;
-        CGFloat newW = scrollView.contentOffset.y <= 0 ? (newH * overviewWidth) / newH : overviewWidth;
-        
-        _mainImageView.frame = (CGRect){ 0.0, 0.0, newW, newH };
-        
-        if(scrollView.contentOffset.y < startContentOffset_.y-kMGOffsetEffects) {
-            diff = kMGOffsetEffects;
-        }
-        
-        //Image blur effects
-        CGFloat scale = kLBBlurredImageDefaultBlurRadius/kMGOffsetEffects;
-        CGFloat newBlur = kLBBlurredImageDefaultBlurRadius - diff*scale;
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            //Blur effects
-            if (_shouldUnblur) {
-                if(ABS(lastContentOffsetBlurEffect_.y-scrollView.contentOffset.y) >= kMGOffsetBlurEffect) {
-                    lastContentOffsetBlurEffect_ = scrollView.contentOffset;
-                    [_mainImageView setImageToBlur:image_ blurRadius:newBlur tintColor:_tintColor completionBlock:nil];
-                }
-            }
-            
-            //Opacity overView
-            CGFloat scale = 1.0/kMGOffsetEffects;
-            overView.alpha = 1.0 - diff*scale;
-        });
-    } else if (scrollingType_ == MGSpotyViewTableScrollingTypeNormal) {
-        _overView.frame = (CGRect){ 0.0, -absoluteY, overviewWidth, overviewHeight };
-        
-        if (_overViewFadeOut) {
-            CGFloat diff = startContentOffset_.y + scrollView.contentOffset.y;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //Opacity overView
-                CGFloat scale = 1.0/(overView.frame.size.height/2.0);
-                overView.alpha = 1.0 - diff*scale;
-            });
-        }
-    }
+    [self bsu_applyEffectsConsideringScrollViewContentOffset:scrollView.contentOffset];
     
     if ([self.delegate respondsToSelector:@selector(spotyViewController:scrollViewDidScroll:)]) {
         [self.delegate spotyViewController:self scrollViewDidScroll:scrollView];
