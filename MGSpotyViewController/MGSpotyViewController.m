@@ -78,7 +78,7 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
     _mainImageView.frame = (CGRect){ 0, 0, viewWidth, MIN(viewWidth, CGRectGetHeight(view.frame)*kMGMaxPercentageOverviewHeightInScreen) };
     _mainImageView.contentMode = UIViewContentModeScaleAspectFill;
     _mainImageView.clipsToBounds = YES;
-    [_mainImageView setImageToBlur:image_ blurRadius:kLBBlurredImageDefaultBlurRadius completionBlock:nil];
+    [_mainImageView setImageToBlur:image_ blurRadius:kLBBlurredImageDefaultBlurRadius tintColor:_tintColor completionBlock:nil];
     [view addSubview:_mainImageView];
     
     _overView.frame = _mainImageView.bounds;
@@ -140,7 +140,7 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
     
     //Copying resized image & setting to blur
     image_ = [image copy];
-    [_mainImageView setImageToBlur:image blurRadius:kLBBlurredImageDefaultBlurRadius completionBlock:nil];
+    [_mainImageView setImageToBlur:image blurRadius:kLBBlurredImageDefaultBlurRadius tintColor:_tintColor completionBlock:nil];
 }
 
 - (void)setBlurRadius:(CGFloat)blurRadius
@@ -257,7 +257,7 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
             if (_shouldUnblur) {
                 if(ABS(lastContentOffsetBlurEffect_.y-scrollView.contentOffset.y) >= kMGOffsetBlurEffect) {
                     lastContentOffsetBlurEffect_ = scrollView.contentOffset;
-                    [_mainImageView setImageToBlur:image_ blurRadius:newBlur completionBlock:nil];
+                    [_mainImageView setImageToBlur:image_ blurRadius:newBlur tintColor:_tintColor completionBlock:nil];
                 }
             }
             

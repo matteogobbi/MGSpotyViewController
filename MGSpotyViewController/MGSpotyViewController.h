@@ -38,6 +38,12 @@ typedef NS_ENUM(NSUInteger, MGSpotyViewTableScrollingType) {
 @property (nonatomic, strong) UIImageView *mainImageView;
 
 /**
+ *  The tint color on top of the blur. When alpha is 1.0 
+ *  you'll not be able to see the image behind.
+ */
+@property (nonatomic, strong) UIColor *tintColor;
+
+/**
  *  Indicate if the overView has to fade out when scrolling up
  *  Default value: NO
  */
