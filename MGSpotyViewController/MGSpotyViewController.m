@@ -143,7 +143,7 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
     //Copying resized image & setting to blur
     image_ = [image copy];
     
-    [_mainImageView setImageToBlur:image blurRadius:kLBBlurredImageDefaultBlurRadius completionBlock:nil];
+    [_mainImageView setImageToBlur:image blurRadius:kLBBlurredImageDefaultBlurRadius tintColor:_tintColor completionBlock:nil];
 
     [self mg_applyEffectsConsideringScrollViewContentOffset:_tableView.contentOffset];
 }
