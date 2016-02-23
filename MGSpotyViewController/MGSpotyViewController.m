@@ -130,7 +130,7 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
         [_overView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[overView]-0-|" options:0 metrics:nil views:views]];
     }
     
-    [self bsu_applyEffectsConsideringScrollViewContentOffset:_tableView.contentOffset];
+    [self mg_applyEffectsConsideringScrollViewContentOffset:_tableView.contentOffset];
 }
 
 - (void)setMainImage:(UIImage *)image
@@ -143,7 +143,9 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
     //Copying resized image & setting to blur
     image_ = [image copy];
     
-    [self bsu_applyEffectsConsideringScrollViewContentOffset:_tableView.contentOffset];
+    [_mainImageView setImageToBlur:image blurRadius:kLBBlurredImageDefaultBlurRadius completionBlock:nil];
+
+    [self mg_applyEffectsConsideringScrollViewContentOffset:_tableView.contentOffset];
 }
 
 - (void)setBlurRadius:(CGFloat)blurRadius
@@ -210,7 +212,7 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
     lastContentOffsetBlurEffect_ = startContentOffset_;
 }
 
-- (void)bsu_applyEffectsConsideringScrollViewContentOffset:(CGPoint)contentOffset
+- (void)mg_applyEffectsConsideringScrollViewContentOffset:(CGPoint)contentOffset
 {
     //Image size effects
     CGFloat absoluteY = ABS(contentOffset.y);
@@ -221,7 +223,7 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
     
     if(contentOffset.y <= startContentOffset_.y) {
         _overView.frame = (CGRect){ 0.0, absoluteY, overviewWidth, overviewHeight };
-                
+        
         CGFloat diff = startContentOffset_.y - contentOffset.y;
         CGFloat newH = contentOffset.y <= 0 ? overviewHeight + absoluteY : overviewHeight;
         CGFloat newW = contentOffset.y <= 0 ? (newH * overviewWidth) / newH : overviewWidth;
@@ -284,7 +286,7 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [self bsu_applyEffectsConsideringScrollViewContentOffset:scrollView.contentOffset];
+    [self mg_applyEffectsConsideringScrollViewContentOffset:scrollView.contentOffset];
     
     if ([self.delegate respondsToSelector:@selector(spotyViewController:scrollViewDidScroll:)]) {
         [self.delegate spotyViewController:self scrollViewDidScroll:scrollView];
