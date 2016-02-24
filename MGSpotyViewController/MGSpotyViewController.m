@@ -16,6 +16,7 @@ CGFloat const kMGOffsetEffects = 40.0;
 CGFloat const kMGOffsetBlurEffect = 2.0;
 
 static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
+static const NSUInteger kMGOverviewMainSubviewTag = 100;
 
 
 @interface MGSpotyViewController () <UITableViewDelegate, UITableViewDataSource>
@@ -111,13 +112,13 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
 
 - (void)setOverView:(UIView *)overView
 {
-    static NSUInteger subviewTag = 100;
-    UIView *subView = [overView viewWithTag:subviewTag];
+    UIView *subView = [_overView viewWithTag:kMGOverviewMainSubviewTag];
     
     if(![subView isEqual:overView]) {
         [subView removeFromSuperview];
         _overView.frame = overView.frame;
         [_overView addSubview:overView];
+        overView.tag = kMGOverviewMainSubviewTag;
         
         for (NSLayoutConstraint *constraint in _overView.constraints) {
             [_overView removeConstraint:constraint];
@@ -144,7 +145,7 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
     image_ = [image copy];
     
     [_mainImageView setImageToBlur:image blurRadius:kLBBlurredImageDefaultBlurRadius tintColor:_tintColor completionBlock:nil];
-
+    
     [self mg_applyEffectsConsideringScrollViewContentOffset:_tableView.contentOffset];
 }
 
@@ -219,7 +220,7 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
     CGFloat overviewWidth = CGRectGetWidth(_overView.frame);
     CGFloat overviewHeight = CGRectGetHeight(_overView.frame);
     
-    __block typeof (_overView) overView = _overView;
+    __block UIView *overviewMainSubview = [_overView viewWithTag:kMGOverviewMainSubviewTag];;
     
     if(contentOffset.y <= startContentOffset_.y) {
         _overView.frame = (CGRect){ 0.0, absoluteY, overviewWidth, overviewHeight };
@@ -250,7 +251,7 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
             
             //Opacity overView
             CGFloat scale = 1.0/kMGOffsetEffects;
-            overView.alpha = 1.0 - diff*scale;
+            overviewMainSubview.alpha = 1.0 - diff*scale;
         });
     } else if (scrollingType_ == MGSpotyViewTableScrollingTypeNormal) {
         _overView.frame = (CGRect){ 0.0, -absoluteY, overviewWidth, overviewHeight };
@@ -259,8 +260,8 @@ static const CGFloat kMGMaxPercentageOverviewHeightInScreen = 0.60f;
             CGFloat diff = startContentOffset_.y + contentOffset.y;
             dispatch_async(dispatch_get_main_queue(), ^{
                 //Opacity overView
-                CGFloat scale = 1.0/(overView.frame.size.height/2.0);
-                overView.alpha = 1.0 - diff*scale;
+                CGFloat scale = 1.0/(overviewMainSubview.frame.size.height/2.0);
+                overviewMainSubview.alpha = 1.0 - diff*scale;
             });
         }
     }
