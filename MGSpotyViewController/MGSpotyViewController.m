@@ -79,7 +79,11 @@ static const NSUInteger kMGOverviewMainSubviewTag = 100;
     _mainImageView.frame = (CGRect){ 0, 0, viewWidth, MIN(viewWidth, CGRectGetHeight(view.frame)*kMGMaxPercentageOverviewHeightInScreen) };
     _mainImageView.contentMode = UIViewContentModeScaleAspectFill;
     _mainImageView.clipsToBounds = YES;
-    [_mainImageView setImageToBlur:image_ blurRadius:kLBBlurredImageDefaultBlurRadius tintColor:_tintColor completionBlock:nil];
+    
+    if (image_) {
+        [_mainImageView setImageToBlur:image_ blurRadius:kLBBlurredImageDefaultBlurRadius tintColor:_tintColor completionBlock:nil];
+    }
+    
     [view addSubview:_mainImageView];
     
     _overView.frame = _mainImageView.bounds;
@@ -144,9 +148,11 @@ static const NSUInteger kMGOverviewMainSubviewTag = 100;
     //Copying resized image & setting to blur
     image_ = [image copy];
     
-    [_mainImageView setImageToBlur:image blurRadius:kLBBlurredImageDefaultBlurRadius tintColor:_tintColor completionBlock:nil];
-    
-    [self mg_applyEffectsConsideringScrollViewContentOffset:_tableView.contentOffset];
+    // If image is nil means that the context was nil
+    if (image) {
+        [_mainImageView setImageToBlur:image blurRadius:kLBBlurredImageDefaultBlurRadius tintColor:_tintColor completionBlock:nil];
+        [self mg_applyEffectsConsideringScrollViewContentOffset:_tableView.contentOffset];
+    }
 }
 
 - (void)setBlurRadius:(CGFloat)blurRadius
