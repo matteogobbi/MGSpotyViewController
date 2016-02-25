@@ -56,6 +56,13 @@ typedef NS_ENUM(NSUInteger, MGSpotyViewTableScrollingType) {
 @property (atomic) BOOL shouldUnblur;
 
 /**
+ *  Indicate if the overView height is resized automatically when the
+ *  device is rotated (ie when the height of the interface change)
+ *  Default value: YES
+ */
+@property (atomic) BOOL flexibleOverviewHeight;
+
+/**
  *  Set the value of the blur radius.
  *  Default value: 20.0
  */
