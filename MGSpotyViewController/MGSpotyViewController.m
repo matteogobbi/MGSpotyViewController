@@ -376,7 +376,7 @@ static const NSUInteger kMGOverviewMainSubviewTag = 100;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath
 {
-    if (indexPath.section == 1) {
+    if (indexPath.section > 0) {
         if ([self.delegate respondsToSelector:@selector(spotyViewController:didSelectRowAtIndexPath:)]) {
             [self.delegate spotyViewController:self didSelectRowAtIndexPath:indexPath];
         }
@@ -385,7 +385,7 @@ static const NSUInteger kMGOverviewMainSubviewTag = 100;
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 1) {
+    if (indexPath.section > 0) {
         if ([self.delegate respondsToSelector:@selector(spotyViewController:didDeselectRowAtIndexPath:)]) {
             [self.delegate spotyViewController:self didDeselectRowAtIndexPath:indexPath];
         }
