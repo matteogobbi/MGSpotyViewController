@@ -204,22 +204,22 @@ static const NSUInteger kMGOverviewMainSubviewTag = 100;
 
 - (void)mg_didRotateToSize:(CGSize)size
 {
+    CGRect rect = _overView.frame;
+    rect.size.width = size.width;
+    
     if (_flexibleOverviewHeight) {
         CGFloat newH = MIN(size.height*kMGMaxPercentageOverviewHeightInScreen, size.width);
-        
-        CGRect rect = _overView.frame;
-        rect.size.width = size.width;
         rect.size.height = newH;
-        
-        _overView.frame = rect;
-        _mainImageView.frame = rect;
-        _tableView.frame = (CGRect){ 0, 0, size.width, size.height };
-        
-        //Clear
-        _tableView.contentOffset = (CGPoint){ 0, 0 };
-        startContentOffset_ = _tableView.contentOffset;
-        lastContentOffsetBlurEffect_ = startContentOffset_;
     }
+    
+    _overView.frame = rect;
+    _mainImageView.frame = rect;
+    _tableView.frame = (CGRect){ 0, 0, size.width, size.height };
+    
+    //Clear
+    _tableView.contentOffset = (CGPoint){ 0, 0 };
+    startContentOffset_ = _tableView.contentOffset;
+    lastContentOffsetBlurEffect_ = startContentOffset_;
 }
 
 - (void)mg_applyEffectsConsideringScrollViewContentOffset:(CGPoint)contentOffset
