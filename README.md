@@ -2,6 +2,7 @@ MGSpotyViewController
 =====================
 
 Beautiful viewController with a tableView and amazing effects like a viewController in the Spotify app.
+With MGSpotyViewController you can implement several layouts like these:
 
 <img src="http://www.matteogobbi.it/files-hosting/MGSpotyViewVideo-smaller.gif" alt="MGSpotyViewController Gif" />
 
@@ -94,23 +95,17 @@ In the implementation file, first of all you should set the `overView`. The `ove
 }
 ```
 
-The best `overView` to create would be a <b>squared view</b> with a <b>transparent background</b>, and with the same <b>size</b> of `self.overView` which is a <b>flexible container view</b> in the class `MGSpotyViewController`.
-<b>Width and height should be therefore equal, and they should correspond to the width of the screen</b>.
-
-So for an iPhone 4s, the best frame would be: `{0, 0, 320.0, 320.0}` with flexible width and height.
-
-But to make the size adaptable to the screen without any issue, the best thing would be to <b>set the same bounds of the view</b> `self.overView`:
-
-``` objective-c
-UIView *view = [[UIView alloc] initWithFrame:self.overView.bounds];
-```
-
 Another thing to configure is the `tableView`. The `tableView` is already in the `MGSpotyViewController`, you have just to set the `MGSpotyViewControllerDataSource` and `MGSpotyViewControllerDelegate` and use their methods.
 
-You must <b>remember that the section 0 is reserved, so you have to return 1 section in more and managing only your sections (section > 0)</b>:
+You must <b>remember that the section 0 is reserved</b>, so even if you will return 1 section, your delegate will get called for section number 1, not 0. Basically for sections the counter doesn't start from 0 but from 1:
 
 ``` objective-c
 #pragma mark - MGSpotyViewControllerDataSource
+
+- (NSInteger)numberOfSectionsInSpotyViewController:(MGSpotyViewController *)spotyViewController
+{
+    return 1;
+}
 
 - (NSInteger)spotyViewController:(MGSpotyViewController *)spotyViewController
        numberOfRowsInSection:(NSInteger)section
@@ -119,24 +114,18 @@ You must <b>remember that the section 0 is reserved, so you have to return 1 sec
 }
 
 - (UITableViewCell *)spotyViewController:(MGSpotyViewController *)spotyViewController
-               cellForRowAtIndexPath:(NSIndexPath *)indexPath
+                               tableView:(UITableView *)tableView
+                   cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  static NSString *identifier = @"CellID";
-  UITableViewCell *cell = [spotyViewController.tableView dequeueReusableCellWithIdentifier:identifier];
-
-  if(!cell) {
-      cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-      cell.backgroundColor = [UIColor darkGrayColor];
-      cell.textLabel.textColor = [UIColor whiteColor];
-  }
-
-  cell.textLabel.text = @"Cell";
+  // IndexPath is 1-1, 1-2, 1-3 etc.
+  
+  UITableViewCell *cell = // Your cell initialisation
 
   return cell;
 }
 ```
 
-And, if you need to manage <b>sections header title</b> or <b>sections header view, for the section 0 you should use the</b> `MGSpotyViewControllerDelegate` <b>methods</b>, like in the example below:
+And, if you need to manage <b>sections header title</b> or <b>sections header view</b>:
 
 ```objective-c
 #pragma mark - MGSpotyViewControllerDelegate
@@ -152,6 +141,49 @@ And, if you need to manage <b>sections header title</b> or <b>sections header vi
 {
   return @"My Section";
 }
+```
+
+## Customisations
+
+There are a bunch of properties you can play with to get the best result for your needs:
+
+``` objective-c
+/**
+ *  The tint color on top of the blur. When alpha is 1.0 
+ *  you'll not be able to see the image behind.
+ */
+@property (nonatomic, strong) UIColor *tintColor;
+
+/**
+ *  Indicate if the overView has to fade out when scrolling up
+ *  Default value: NO
+ */
+@property (atomic) BOOL overViewFadeOut;
+
+/**
+ *  Indicate if the main image has to get unblurred when scrolling down
+ *  Default value: YES
+ */
+@property (atomic) BOOL shouldUnblur;
+
+/**
+ *  Indicate if the overView height is resized automatically when the
+ *  device is rotated (ie when the height of the interface change)
+ *  Default value: YES
+ */
+@property (atomic) BOOL flexibleOverviewHeight;
+
+/**
+ *  Set the value of the blur radius.
+ *  Default value: 20.0
+ */
+@property (nonatomic) CGFloat blurRadius;
+```
+
+And also an initialiser which takes in input a scrolling type which are essentially the 2 kinds of scrolling you see in the previous examples:
+
+```objective-c
+- (instancetype)initWithMainImage:(UIImage *)image tableScrollingType:(MGSpotyViewTableScrollingType)scrollingType;
 ```
 
 ## Contact
