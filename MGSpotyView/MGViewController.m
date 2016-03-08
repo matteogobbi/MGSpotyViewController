@@ -29,7 +29,7 @@
         dataSource_ = [MGViewControllerDataSource new];
         delegate_ = [MGViewControllerDelegate new];
         
-        self.overViewFadeOut = YES;
+        self.overViewUpFadeOut = YES;
         
         self.blurRadius = 8.f;
         self.tintColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];

@@ -47,7 +47,19 @@ typedef NS_ENUM(NSUInteger, MGSpotyViewTableScrollingType) {
  *  Indicate if the overView has to fade out when scrolling up
  *  Default value: NO
  */
-@property (atomic) BOOL overViewFadeOut;
+@property (atomic) BOOL overViewFadeOut __deprecated_msg("Deprecated in version 0.4.8; Use instead `overViewUpFadeOut`.");
+
+/**
+ *  Indicate if the overView has to fade out when scrolling up
+ *  Default value: NO
+ */
+@property (atomic) BOOL overViewUpFadeOut;
+
+/**
+ *  Indicate if the overView has to fade out when scrolling down
+ *  Default value: YES
+ */
+@property (atomic) BOOL overViewDownFadeOut;
 
 /**
  *  Indicate if the main image has to get unblurred when scrolling down

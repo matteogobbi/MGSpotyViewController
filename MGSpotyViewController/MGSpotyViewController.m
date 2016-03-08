@@ -63,6 +63,8 @@ static const NSUInteger kMGOverviewMainSubviewTag = 100;
         
         operationQueue_ = [[NSOperationQueue alloc]init];
         operationQueue_.maxConcurrentOperationCount = 1;
+        
+        _overViewDownFadeOut = YES;
     }
     
     return self;
@@ -167,6 +169,19 @@ static const NSUInteger kMGOverviewMainSubviewTag = 100;
 }
 
 
+#pragma mark - Versioning (deprecated)
+
+- (void)setOverViewFadeOut:(BOOL)overViewFadeOut
+{
+    _overViewUpFadeOut = overViewFadeOut;
+}
+
+- (BOOL)overViewFadeOut
+{
+    return _overViewUpFadeOut;
+}
+
+
 #pragma mark - Public methods
 
 - (void)registerCellClass:(Class)cellClass forCellReuseIdentifier:(NSString *)identifier
@@ -259,13 +274,15 @@ static const NSUInteger kMGOverviewMainSubviewTag = 100;
             }
             
             //Opacity overView
-            CGFloat scale = 1.0/kMGOffsetEffects;
-            overviewMainSubview.alpha = 1.0 - diff*scale;
+            if (_overViewDownFadeOut) {
+                CGFloat scale = 1.0/kMGOffsetEffects;
+                overviewMainSubview.alpha = 1.0 - diff*scale;
+            }
         });
     } else if (scrollingType_ == MGSpotyViewTableScrollingTypeNormal) {
         _overView.frame = (CGRect){ 0.0, -absoluteY, overviewWidth, overviewHeight };
         
-        if (_overViewFadeOut) {
+        if (_overViewUpFadeOut) {
             CGFloat diff = startContentOffset_.y + contentOffset.y;
             dispatch_async(dispatch_get_main_queue(), ^{
                 //Opacity overView
