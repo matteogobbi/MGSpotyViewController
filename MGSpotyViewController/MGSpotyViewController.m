@@ -119,11 +119,12 @@ static const NSUInteger kMGOverviewMainSubviewTag = 100;
 
 - (void)setOverView:(UIView *)overView
 {
+    _overView.frame = overView.frame;
+
     UIView *subView = [_overView viewWithTag:kMGOverviewMainSubviewTag];
     
     if(![subView isEqual:overView]) {
         [subView removeFromSuperview];
-        _overView.frame = overView.frame;
         [_overView addSubview:overView];
         overView.tag = kMGOverviewMainSubviewTag;
         
