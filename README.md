@@ -4,8 +4,9 @@ MGSpotyViewController
 Beautiful viewController with a tableView and amazing effects like a viewController in the Spotify app.
 With MGSpotyViewController you can implement several layouts like these:
 
-<img src="http://www.matteogobbi.it/files-hosting/MGSpotyViewVideo-smaller.gif" alt="MGSpotyViewController Gif" />
-<img src="https://github.com/matteogobbi/MGSpotyViewController/blob/master/GIFs%20and%20Videos/spotiviewcontroller.gif" alt="MGSpotyViewController Gif" width=300 />
+<img src="http://www.matteogobbi.it/files-hosting/MGSpotyViewVideo-smaller.gif" alt="MGSpotyViewController Gif" width=280 />
+<img src="https://github.com/matteogobbi/MGSpotyViewController/blob/master/GIFs%20and%20Videos/spotiviewcontroller.gif" alt="MGSpotyViewController Gif" width=280 />
+<img src="https://github.com/matteogobbi/MGSpotyViewController/blob/master/GIFs%20and%20Videos/spotiviewcontroller.gif" alt="MGSpotyViewController Gif" width=280 />
 
 ## Info
 
